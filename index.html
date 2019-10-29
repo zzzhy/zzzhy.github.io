@@ -1114,16 +1114,18 @@
 </blockquote>
 </li>
 <li>滑动区间<blockquote>
-<p>从当前窗口到下一个窗口间隔的周期数量。每次划过的窗口数</p>
+<p>从当前窗口到下一个窗口间隔的周期数量,每次划过的窗口数<br>如果这两个参数的值都是1，则跟不使用窗口效果一样。每个窗口的周期数据都会合并成一个RDD保存在DStream中。</p>
 </blockquote>
 </li>
-</ul>
-<p>如果这两个参数的值都是1，则跟不使用窗口效果一样。每个窗口的周期数据都会合并成一个RDD保存在DStream中。</p>
-<ul>
 <li>窗口函数<br>用windowLength、slideInterval生成一个带窗口的DStream，也可以使用加窗口参数的方法：countByWindow、reduceByWindow、reduceByKeyAndWindow、countByValueAndWindow.</li>
 </ul>
-<h3 id="高级操作"><a href="#高级操作" class="headerlink" title="高级操作"></a>高级操作</h3><h4 id="缓存与持久化"><a href="#缓存与持久化" class="headerlink" title="缓存与持久化"></a>缓存与持久化</h4><p>窗口函数和updateStateByKey会默认自动持久化<br>从网络接收数据的输入DStream，默认持久化级别是复制数据到两个节点上，以确保容错能力。</p>
-<h4 id="打包、发布和监控"><a href="#打包、发布和监控" class="headerlink" title="打包、发布和监控"></a>打包、发布和监控</h4><ul>
+<h3 id="高级操作"><a href="#高级操作" class="headerlink" title="高级操作"></a>高级操作</h3><ol>
+<li><p>缓存与持久化<br>窗口函数和updateStateByKey会默认自动持久化<br>从网络接收数据的输入DStream，默认持久化级别是复制数据到两个节点上，以确保容错能力。</p>
+</li>
+<li><p>打包、发布和监控</p>
+</li>
+</ol>
+<ul>
 <li>需要提供spark之外的其他所有第三方jar包。</li>
 <li>最好用hdfs或s3的文件系统目录来配置检查点</li>
 <li>配置driver程序自动重启<blockquote>
@@ -1132,25 +1134,42 @@
 </li>
 <li>从1.2开始，支持Write Ahead Logs(WAL)，开启之后，所有收到的数据在处理前会写到检查点目录下，可确保driver重启期间数据不丢失。设置spark.streaming.receiver.writeAheadLog.enable为true开启，会降低数据接收的吞吐量，不过可以通过采用<strong>并发接收</strong>的方式降低影响。如果开启了WAL，可以关闭接受数据时的复制机制：<strong>设置输入DStream的存储级别为StorageLevel.MEMORY_AND_DISK_SER</strong>。</li>
 </ul>
-<h4 id="更新程序代码"><a href="#更新程序代码" class="headerlink" title="更新程序代码"></a>更新程序代码</h4><p>为了不丢失数据，可采用一下两种方法：</p>
+<ol start="3">
+<li>更新程序代码<br>为了不丢失数据，可采用一下两种方法：</li>
+</ol>
 <ul>
 <li><strong>新旧程序同时运行。</strong> 等新的程序运行之后，在停止旧的程序。这种方式要求数据源支持同时向新、旧两个版本的程序发数据</li>
 <li><strong>先停止旧的程序再启动新的程序。</strong><br>要保证旧的程序是被优雅的关闭，确保关闭前接收到的数据都处理完了。这种方式只适用于<strong>支持缓存数据功能</strong>的数据源，如Kafka、Flume。启动新的程序时在读取前一个程序的检查点信息时可能出错，因为检查点中一些对象是序列化存储，新的对象结构可能已经改变了。解决办法是：<strong>用新的检查点目录</strong>或者<strong>删除旧的检查点目录下的所有内容</strong>。</li>
 </ul>
-<h2 id="spark-streaming调优方向"><a href="#spark-streaming调优方向" class="headerlink" title="spark streaming调优方向"></a>spark streaming调优方向</h2><h3 id="每个批次的处理时间尽可能短"><a href="#每个批次的处理时间尽可能短" class="headerlink" title="每个批次的处理时间尽可能短"></a>每个批次的处理时间尽可能短</h3><h3 id="收到数据后尽可能快的处理"><a href="#收到数据后尽可能快的处理" class="headerlink" title="收到数据后尽可能快的处理"></a>收到数据后尽可能快的处理</h3><h2 id="优化方法"><a href="#优化方法" class="headerlink" title="优化方法"></a>优化方法</h2><h3 id="减少批处理的时间"><a href="#减少批处理的时间" class="headerlink" title="减少批处理的时间"></a>减少批处理的时间</h3><h4 id="增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。"><a href="#增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。" class="headerlink" title="增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。"></a>增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。</h4><blockquote>
+<h2 id="spark-streaming调优方向"><a href="#spark-streaming调优方向" class="headerlink" title="spark streaming调优方向"></a>spark streaming调优方向</h2><ol>
+<li><p>每个批次的处理时间尽可能短</p>
+</li>
+<li><p>收到数据后尽可能快的处理</p>
+</li>
+</ol>
+<h2 id="优化方法"><a href="#优化方法" class="headerlink" title="优化方法"></a>优化方法</h2><h3 id="减少批处理的时间"><a href="#减少批处理的时间" class="headerlink" title="减少批处理的时间"></a>减少批处理的时间</h3><ol>
+<li>增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。<blockquote>
 <p>默认每个InputDStream只会创建一个接收器，我们可以创建多个让它们接收不同的数据分区，以实现并行接收。</p>
 </blockquote>
+</li>
+</ol>
 <blockquote>
 <p>比如1个接收2个topic的Kafka InputDStream可以优化为2个InputDStream，各接收一个topic，然后在合并。</p>
 </blockquote>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> numStreams = <span class="number">5</span></span><br><span class="line"><span class="keyword">val</span> kafkaStreams = (<span class="number">1</span> to numStreams).map&#123;</span><br><span class="line">    i =&gt; <span class="type">KafkaUtils</span>.createStream(...)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">val</span> unifiedStream = streamingContext.union(kafkaStreams)</span><br><span class="line">unifiedStream.print()</span><br></pre></td></tr></table></figure>
 
-<h4 id="数据处理的并发度"><a href="#数据处理的并发度" class="headerlink" title="数据处理的并发度"></a>数据处理的并发度</h4><blockquote>
+<ol start="2">
+<li><p>数据处理的并发度</p>
+<blockquote>
 <p>调整选项spark.default.parallelism</p>
 </blockquote>
-<h4 id="task启动的额外开销"><a href="#task启动的额外开销" class="headerlink" title="task启动的额外开销"></a>task启动的额外开销</h4><blockquote>
+</li>
+<li><p>task启动的额外开销</p>
+<blockquote>
 <p>如果task启动过于频繁（比如每秒50次），额外的开销可能非常高，甚至无法达到实时计算要求。</p>
 </blockquote>
+</li>
+</ol>
 <h3 id="设置合理批次间隔时间"><a href="#设置合理批次间隔时间" class="headerlink" title="设置合理批次间隔时间"></a>设置合理批次间隔时间</h3><blockquote>
 <p>一般来说短时间间隔会导致更多的额外开销，以及无法完成的风险，所以前期采取相对保守的方法，将间隔设置为5~10秒。然后通过观察运行数据确保系统足够实时，每个间隔的实际计算时间远小于间隔时间，再逐渐缩短间隔时间。</p>
 </blockquote>
