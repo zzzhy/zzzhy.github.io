@@ -559,7 +559,7 @@
       
         
           
-            <ol>
+            <h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ol>
 <li>对查询进行优化，应尽量避免全表扫描，首先应考虑在 where 及 order by 涉及的列上建立索引。</li>
 <li>应尽量避免在 where 子句中对字段进行 null 值判断，否则将导致引擎放弃使用索引而进行全表扫描，<br>Sql 代码 : select id from t where num is null;<br>可以在 num 上设置默认值 0,确保表中 num 列没有 null 值，然后这样查询：<br>Sql 代码 : select id from t where num=0;</li>
 <li>应尽量避免在 where 子句中使用!=或&lt;&gt;操作符，否则将引擎放弃使用索引而进行全表扫描。</li>
@@ -915,7 +915,7 @@
       
         
           
-            <h1 id="构建一个-Spark-Streaming-应用程序的4-个步骤"><a href="#构建一个-Spark-Streaming-应用程序的4-个步骤" class="headerlink" title="构建一个 Spark Streaming 应用程序的4 个步骤"></a>构建一个 Spark Streaming 应用程序的4 个步骤</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; val ssc = new StreamingContext(sc,Seconds(5))</span><br><span class="line"></span><br><span class="line">scala&gt; val lines = ssc.socketTextStream(<span class="string">"localhost"</span>,9999)</span><br><span class="line"></span><br><span class="line">scala&gt; val words = lines.flatMap(_.split(<span class="string">" "</span>))</span><br><span class="line"></span><br><span class="line">scala&gt; val pairs = words.map(word =&gt; (word,1))</span><br><span class="line"></span><br><span class="line">scala&gt; val wordCounts = pairs.reduceByKey(_+_)</span><br><span class="line"></span><br><span class="line">scala&gt; wordCounts.print()</span><br><span class="line"></span><br><span class="line">scala&gt; ssc.start()</span><br></pre></td></tr></table></figure>
+            <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建一个 Spark Streaming 应用程序的4 个步骤</span></span><br><span class="line">scala&gt; val ssc = new StreamingContext(sc,Seconds(5))</span><br><span class="line"></span><br><span class="line">scala&gt; val lines = ssc.socketTextStream(<span class="string">"localhost"</span>,9999)</span><br><span class="line"></span><br><span class="line">scala&gt; val words = lines.flatMap(_.split(<span class="string">" "</span>))</span><br><span class="line"></span><br><span class="line">scala&gt; val pairs = words.map(word =&gt; (word,1))</span><br><span class="line"></span><br><span class="line">scala&gt; val wordCounts = pairs.reduceByKey(_+_)</span><br><span class="line"></span><br><span class="line">scala&gt; wordCounts.print()</span><br><span class="line"></span><br><span class="line">scala&gt; ssc.start()</span><br></pre></td></tr></table></figure>
 
 <h2 id="1、构建-Streaming-Context-对象"><a href="#1、构建-Streaming-Context-对象" class="headerlink" title="1、构建 Streaming Context 对象"></a>1、构建 Streaming Context 对象</h2><blockquote>
 <p>使用 Spark Streaming 需要创建 StreamingContext 对象。Spark Streaming 需要制定处理数据的时间间隔，如 1s，那么 Spark Streaming 会以1s为时间窗口进行数据处理。此参数需要根据用户的需求和集群的处理能力进行适当的设置，它的生命周期会伴随整个StreamingContext 的生命周期且无法重新设置。因此，用户需要从需求和集群处理能力出发，设置一个合理的时间间隔。</p>
@@ -1016,7 +1016,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/10/30/spark-streaming-tuning/" itemprop="url">spark streaming 基础与调优tuning</a></h1>
+                <a class="post-title-link" href="/2019/10/30/spark-streaming-tuning/" itemprop="url">spark streaming 基础与调优</a></h1>
         
 
         <div class="post-meta">
@@ -1122,7 +1122,7 @@
 <ul>
 <li>窗口函数<br>用windowLength、slideInterval生成一个带窗口的DStream，也可以使用加窗口参数的方法：countByWindow、reduceByWindow、reduceByKeyAndWindow、countByValueAndWindow.</li>
 </ul>
-<h3 id="高级操作"><a href="#高级操作" class="headerlink" title="高级操作"></a>高级操作</h3><h5 id="1、缓存与持久化"><a href="#1、缓存与持久化" class="headerlink" title="1、缓存与持久化"></a>1、缓存与持久化</h5><p>窗口函数和updateStateByKey会默认自动持久化<br>从网络接收数据的输入DStream，默认持久化级别是复制数据到两个节点上，以确保容错能力。</p>
+<h3 id="高级操作"><a href="#高级操作" class="headerlink" title="高级操作"></a>高级操作</h3><h4 id="1、缓存与持久化"><a href="#1、缓存与持久化" class="headerlink" title="1、缓存与持久化"></a>1、缓存与持久化</h4><p>窗口函数和updateStateByKey会默认自动持久化<br>从网络接收数据的输入DStream，默认持久化级别是复制数据到两个节点上，以确保容错能力。</p>
 <h4 id="2、打包、发布和监控"><a href="#2、打包、发布和监控" class="headerlink" title="2、打包、发布和监控"></a>2、打包、发布和监控</h4><ul>
 <li>需要提供spark之外的其他所有第三方jar包。</li>
 <li>最好用hdfs或s3的文件系统目录来配置检查点</li>
@@ -1144,6 +1144,7 @@
 <p>比如1个接收2个topic的Kafka InputDStream可以优化为2个InputDStream，各接收一个topic，然后在合并。</p>
 </blockquote>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> numStreams = <span class="number">5</span></span><br><span class="line"><span class="keyword">val</span> kafkaStreams = (<span class="number">1</span> to numStreams).map&#123;</span><br><span class="line">    i =&gt; <span class="type">KafkaUtils</span>.createStream(...)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">val</span> unifiedStream = streamingContext.union(kafkaStreams)</span><br><span class="line">unifiedStream.print()</span><br></pre></td></tr></table></figure>
+
 <h4 id="2、数据处理的并发度"><a href="#2、数据处理的并发度" class="headerlink" title="2、数据处理的并发度"></a>2、数据处理的并发度</h4><blockquote>
 <p>调整选项spark.default.parallelism</p>
 </blockquote>

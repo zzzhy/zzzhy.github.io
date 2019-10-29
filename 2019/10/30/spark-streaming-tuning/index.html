@@ -99,12 +99,12 @@
 <meta name="description" content="spark-streaming的状态更新updateStateByKey、reduceByKeyAndWindow必须启用检查点功能，因为有状态的操作是从程序开始时一直进行的 DStream操作 与RDD相同的操作方法 transform：用于直接操作DStream内部的RDD，那些DStream没有提供的RDD操作，可以通过transform调用实现。如join：123val joinedDSt">
 <meta name="keywords" content="tuning,scala,spark,spark streaming">
 <meta property="og:type" content="article">
-<meta property="og:title" content="spark streaming 基础与调优tuning">
+<meta property="og:title" content="spark streaming 基础与调优">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;30&#x2F;spark-streaming-tuning&#x2F;index.html">
 <meta property="og:site_name" content="running-in-sky">
 <meta property="og:description" content="spark-streaming的状态更新updateStateByKey、reduceByKeyAndWindow必须启用检查点功能，因为有状态的操作是从程序开始时一直进行的 DStream操作 与RDD相同的操作方法 transform：用于直接操作DStream内部的RDD，那些DStream没有提供的RDD操作，可以通过transform调用实现。如join：123val joinedDSt">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-29T17:32:07.157Z">
+<meta property="og:updated_time" content="2019-10-29T17:48:29.651Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -140,7 +140,7 @@
 
 
 
-  <title>spark streaming 基础与调优tuning | running-in-sky</title>
+  <title>spark streaming 基础与调优 | running-in-sky</title>
   
 
 
@@ -320,7 +320,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">spark streaming 基础与调优tuning</h1>
+          <h1 class="post-title" itemprop="name headline">spark streaming 基础与调优</h1>
         
 
         <div class="post-meta">
@@ -424,7 +424,7 @@
 <ul>
 <li>窗口函数<br>用windowLength、slideInterval生成一个带窗口的DStream，也可以使用加窗口参数的方法：countByWindow、reduceByWindow、reduceByKeyAndWindow、countByValueAndWindow.</li>
 </ul>
-<h3 id="高级操作"><a href="#高级操作" class="headerlink" title="高级操作"></a>高级操作</h3><h5 id="1、缓存与持久化"><a href="#1、缓存与持久化" class="headerlink" title="1、缓存与持久化"></a>1、缓存与持久化</h5><p>窗口函数和updateStateByKey会默认自动持久化<br>从网络接收数据的输入DStream，默认持久化级别是复制数据到两个节点上，以确保容错能力。</p>
+<h3 id="高级操作"><a href="#高级操作" class="headerlink" title="高级操作"></a>高级操作</h3><h4 id="1、缓存与持久化"><a href="#1、缓存与持久化" class="headerlink" title="1、缓存与持久化"></a>1、缓存与持久化</h4><p>窗口函数和updateStateByKey会默认自动持久化<br>从网络接收数据的输入DStream，默认持久化级别是复制数据到两个节点上，以确保容错能力。</p>
 <h4 id="2、打包、发布和监控"><a href="#2、打包、发布和监控" class="headerlink" title="2、打包、发布和监控"></a>2、打包、发布和监控</h4><ul>
 <li>需要提供spark之外的其他所有第三方jar包。</li>
 <li>最好用hdfs或s3的文件系统目录来配置检查点</li>
@@ -446,6 +446,7 @@
 <p>比如1个接收2个topic的Kafka InputDStream可以优化为2个InputDStream，各接收一个topic，然后在合并。</p>
 </blockquote>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> numStreams = <span class="number">5</span></span><br><span class="line"><span class="keyword">val</span> kafkaStreams = (<span class="number">1</span> to numStreams).map&#123;</span><br><span class="line">    i =&gt; <span class="type">KafkaUtils</span>.createStream(...)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">val</span> unifiedStream = streamingContext.union(kafkaStreams)</span><br><span class="line">unifiedStream.print()</span><br></pre></td></tr></table></figure>
+
 <h4 id="2、数据处理的并发度"><a href="#2、数据处理的并发度" class="headerlink" title="2、数据处理的并发度"></a>2、数据处理的并发度</h4><blockquote>
 <p>调整选项spark.default.parallelism</p>
 </blockquote>
@@ -699,7 +700,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#spark-streaming的状态更新"><span class="nav-number">1.</span> <span class="nav-text">spark-streaming的状态更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DStream操作"><span class="nav-number">2.</span> <span class="nav-text">DStream操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#窗口操作"><span class="nav-number">2.1.</span> <span class="nav-text">窗口操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级操作"><span class="nav-number">2.2.</span> <span class="nav-text">高级操作</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、缓存与持久化"><span class="nav-number">2.2.0.1.</span> <span class="nav-text">1、缓存与持久化</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、打包、发布和监控"><span class="nav-number">2.2.1.</span> <span class="nav-text">2、打包、发布和监控</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、更新程序代码"><span class="nav-number">2.2.2.</span> <span class="nav-text">3、更新程序代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spark-streaming调优方向"><span class="nav-number">3.</span> <span class="nav-text">spark streaming调优方向</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、每个批次的处理时间尽可能短"><span class="nav-number">3.1.</span> <span class="nav-text">一、每个批次的处理时间尽可能短</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、收到数据后尽可能快的处理"><span class="nav-number">3.2.</span> <span class="nav-text">二、收到数据后尽可能快的处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化方法"><span class="nav-number">4.</span> <span class="nav-text">优化方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、减少批处理的时间"><span class="nav-number">4.1.</span> <span class="nav-text">一、减少批处理的时间</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。"><span class="nav-number">4.1.1.</span> <span class="nav-text">1、增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、数据处理的并发度"><span class="nav-number">4.1.2.</span> <span class="nav-text">2、数据处理的并发度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、task启动的额外开销"><span class="nav-number">4.1.3.</span> <span class="nav-text">3、task启动的额外开销</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、设置合理批次间隔时间"><span class="nav-number">4.2.</span> <span class="nav-text">二、设置合理批次间隔时间</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#spark-streaming的状态更新"><span class="nav-number">1.</span> <span class="nav-text">spark-streaming的状态更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DStream操作"><span class="nav-number">2.</span> <span class="nav-text">DStream操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#窗口操作"><span class="nav-number">2.1.</span> <span class="nav-text">窗口操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级操作"><span class="nav-number">2.2.</span> <span class="nav-text">高级操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、缓存与持久化"><span class="nav-number">2.2.1.</span> <span class="nav-text">1、缓存与持久化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、打包、发布和监控"><span class="nav-number">2.2.2.</span> <span class="nav-text">2、打包、发布和监控</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、更新程序代码"><span class="nav-number">2.2.3.</span> <span class="nav-text">3、更新程序代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spark-streaming调优方向"><span class="nav-number">3.</span> <span class="nav-text">spark streaming调优方向</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、每个批次的处理时间尽可能短"><span class="nav-number">3.1.</span> <span class="nav-text">一、每个批次的处理时间尽可能短</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、收到数据后尽可能快的处理"><span class="nav-number">3.2.</span> <span class="nav-text">二、收到数据后尽可能快的处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化方法"><span class="nav-number">4.</span> <span class="nav-text">优化方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、减少批处理的时间"><span class="nav-number">4.1.</span> <span class="nav-text">一、减少批处理的时间</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。"><span class="nav-number">4.1.1.</span> <span class="nav-text">1、增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、数据处理的并发度"><span class="nav-number">4.1.2.</span> <span class="nav-text">2、数据处理的并发度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、task启动的额外开销"><span class="nav-number">4.1.3.</span> <span class="nav-text">3、task启动的额外开销</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、设置合理批次间隔时间"><span class="nav-number">4.2.</span> <span class="nav-text">二、设置合理批次间隔时间</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -860,7 +861,7 @@
         var disqus_config = function () {
           this.page.url = 'http://yoursite.com/2019/10/30/spark-streaming-tuning/';
           this.page.identifier = '2019/10/30/spark-streaming-tuning/';
-          this.page.title = 'spark streaming 基础与调优tuning';
+          this.page.title = 'spark streaming 基础与调优';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://zzzhy-github-io.disqus.com/embed.js';
