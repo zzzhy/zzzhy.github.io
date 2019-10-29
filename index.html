@@ -302,6 +302,476 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/30/spark-streaming-indoor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zzzhy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="running-in-sky">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/30/spark-streaming-indoor/" itemprop="url">spark streaming入门</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-30T00:31:45+08:00">
+                2019-10-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/10/30/spark-streaming-indoor/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/10/30/spark-streaming-indoor/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="构建一个-Spark-Streaming-应用程序的4-个步骤"><a href="#构建一个-Spark-Streaming-应用程序的4-个步骤" class="headerlink" title="构建一个 Spark Streaming 应用程序的4 个步骤"></a>构建一个 Spark Streaming 应用程序的4 个步骤</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">scala&gt; val ssc = new StreamingContext(sc,Seconds(5))</span><br><span class="line"></span><br><span class="line">scala&gt; val lines = ssc.socketTextStream(<span class="string">"localhost"</span>,9999)</span><br><span class="line"></span><br><span class="line">scala&gt; val words = lines.flatMap(_.split(<span class="string">" "</span>))</span><br><span class="line"></span><br><span class="line">scala&gt; val pairs = words.map(word =&gt; (word,1))</span><br><span class="line"></span><br><span class="line">scala&gt; val wordCounts = pairs.reduceByKey(_+_)</span><br><span class="line"></span><br><span class="line">scala&gt; wordCounts.print()</span><br><span class="line"></span><br><span class="line">scala&gt; ssc.start()</span><br></pre></td></tr></table></figure>
+
+<h2 id="1、构建-Streaming-Context-对象"><a href="#1、构建-Streaming-Context-对象" class="headerlink" title="1、构建 Streaming Context 对象"></a>1、构建 Streaming Context 对象</h2><blockquote>
+<p>使用 Spark Streaming 需要创建 StreamingContext 对象。Spark Streaming 需要制定处理数据的时间间隔，如 1s，那么 Spark Streaming 会以1s为时间窗口进行数据处理。此参数需要根据用户的需求和集群的处理能力进行适当的设置，它的生命周期会伴随整个StreamingContext 的生命周期且无法重新设置。因此，用户需要从需求和集群处理能力出发，设置一个合理的时间间隔。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SparkConf sparkConf = <span class="keyword">new</span> SparkConf().setAppName(<span class="string">"JavaRecoverableNetworkWordCount"</span>);</span><br><span class="line"> <span class="comment">// Create the context with a 1 second batch size</span></span><br><span class="line"> <span class="comment">//首先通过 JavaStreamingContextFactory 创建 Spark Streaming 过程。</span></span><br><span class="line"> JavaStreamingContext ssc = <span class="keyword">new</span> JavaStreamingContext(sparkConf, Durations.seconds(<span class="number">1</span>));</span><br><span class="line"> ssc.checkpoint(checkpointDirectory);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Spark Streaming 有特定的窗口操作，窗口操作涉及两个参数：一个是滑动窗口的宽度（Window Duration）；另一个是窗口滑动的频率（Slide Duration），这两个参数必须是 batch size 的倍数。例如以过去 5 秒钟为一个输入窗口，每 1 秒统计一下 WordCount，那么我们会将过去 5 秒钟的每一秒钟的 WordCount 都进行统计，然后进行叠加，得出这个窗口中的单词统计。</p>
+</blockquote>
+<h2 id="2、创建-InputDStream"><a href="#2、创建-InputDStream" class="headerlink" title="2、创建 InputDStream"></a>2、创建 InputDStream</h2><blockquote>
+<p>如同 Strom 的 Spout 一样，Spark Streaming 需要指明数据源。例如 socketTextStream，Spark Streaming 将以套接字连接作为数据源读取数据。当然，Spark Streaming 支持多种不同的数据源，包括 kafkaStream、flumeStream、fileStream、networkStream 等。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JavaReceiverInputDStream&lt;String&gt; lines = ssc.socketTextStream(ip, port);</span><br></pre></td></tr></table></figure>
+<h2 id="3、操作-DStream"><a href="#3、操作-DStream" class="headerlink" title="3、操作 DStream"></a>3、操作 DStream</h2><blockquote>
+<p>对于从数据源得到的DStream，用户可以在其基础上进行各种操作，如 WordCount 的操作就是一个典型的单词计数执行流程，即对当前时间窗口内从数据源得到的数据进行分词，然后利用 MapReduce 算法映射和计算，最后使用 print() 输出结果。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">JavaDStream&lt;String&gt; words = lines.flatMap(s -&gt; Lists.newArrayList(SPACE.split(s)));</span><br><span class="line"> JavaPairDStream&lt;String, Integer&gt; wordCounts = words.mapToPair(w -&gt; <span class="keyword">new</span> Tuple2&lt;String, Integer&gt;(w, <span class="number">1</span>)).reduceByKey((a,b)-&gt;a+b);</span><br><span class="line"></span><br><span class="line"> wordCounts.foreachRDD((rdd,time) -&gt; &#123;</span><br><span class="line">    String counts = <span class="string">"Counts at time "</span> + time + <span class="string">" "</span> + rdd.collect();</span><br><span class="line">    System.out.println(counts);</span><br><span class="line">    System.out.println(<span class="string">"Appending to "</span> + outputFile.getAbsolutePath());</span><br><span class="line">    Files.append(counts + <span class="string">"\n"</span>, outputFile, Charset.defaultCharset());</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="4、启动-Spark-Streaming"><a href="#4、启动-Spark-Streaming" class="headerlink" title="4、启动 Spark Streaming"></a>4、启动 Spark Streaming</h2><blockquote>
+<p>之前的所有步骤只创建了执行流程，程序没有有真正连接上数据源，也没有对数据进行任何操作，只是设定好了所有的执行计算，当 ssc.start() 启动后，程序才真正进行所有预期的操作。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssc.start();</span><br><span class="line">ssc.awaitTermination();</span><br></pre></td></tr></table></figure>
+
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol>
+<li>Spark Streaming 内部的实现和调度方式高度依赖 Spark 的 DAG 调度器和 RDD，这就决定了 Spark Streaming 的设计初衷必须是粗粒度方式的，同时，由于 Spark 内部调度器足够快速和高效，可以快速地处理小批量数据，这就获得准实时的特性。</li>
+<li>Spark Streaming 的粗粒度执行方式使其确保“处理且仅处理一次”的特性，同时也可以更方便地实现容错恢复机制。</li>
+<li>由于 Spark Streaming 的 DStream 本质是 RDD 在流式数据上的抽象，因此基于 RDD 的各种操作也有相应的基于 DStream 的版本，这样就大大降低了用户对于新框架的学习成本，在了解 Spark 的情况下用户将很容易使用 Spark Streaming。</li>
+<li>由于 DStream 是在 RDD 上的抽象，那么也就更容易与 RDD 进行交互操作，在需要将流式数据和批处理数据结合进行分析的情况下，将会变得非常方便。<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2></li>
+<li>Spark Streaming 的粗粒度处理方式也造成了不可避免的延迟。在细粒度处理方式下，理想情况下每一条记录都会被实时处理，而在 Spark Streaming 中，数据需要汇总到一定的量后再一次性处理，这就增加了数据处理的延迟，这种延迟是由框架的设计引入的，并不是由网络或其他情况造成的。</li>
+<li>Spark Streaming 当前版本稳定性不是很好。<br>总而言之，Spark Streaming 为我们提供了一种崭新的流式处理框架，相信未来随着 Spark Streaming 会在易用性、稳定性以及其他方面有很大的提升。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/30/spark-streaming-tuning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zzzhy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="running-in-sky">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/30/spark-streaming-tuning/" itemprop="url">spark streaming 基础与调优tuning</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-30T00:27:23+08:00">
+                2019-10-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/10/30/spark-streaming-tuning/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/10/30/spark-streaming-tuning/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="spark-streaming的状态更新"><a href="#spark-streaming的状态更新" class="headerlink" title="spark-streaming的状态更新"></a>spark-streaming的状态更新</h2><p>updateStateByKey、reduceByKeyAndWindow<br><strong>必须启用检查点功能，因为有状态的操作是从程序开始时一直进行的</strong></p>
+<h2 id="DStream操作"><a href="#DStream操作" class="headerlink" title="DStream操作"></a>DStream操作</h2><ul>
+<li>与RDD相同的操作方法</li>
+<li>transform：用于直接操作DStream内部的RDD，那些DStream没有提供的RDD操作，可以通过transform调用实现。如join：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val joinedDStream = d.transform(<span class="function"><span class="params">rdd</span> =&gt;</span> &#123;</span><br><span class="line">    rdd.join(rdd2)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="窗口操作"><a href="#窗口操作" class="headerlink" title="窗口操作"></a>窗口操作</h3></li>
+<li>窗口长度<blockquote>
+<p>窗口跨越的周期次数，每次窗口处理的数据分片数</p>
+</blockquote>
+</li>
+<li>滑动区间<blockquote>
+<p>从当前窗口到下一个窗口间隔的周期数量。每次划过的窗口数</p>
+</blockquote>
+</li>
+</ul>
+<p>如果这两个参数的值都是1，则跟不使用窗口效果一样。每个窗口的周期数据都会合并成一个RDD保存在DStream中。</p>
+<ul>
+<li>窗口函数<br>用windowLength、slideInterval生成一个带窗口的DStream，也可以使用加窗口参数的方法：countByWindow、reduceByWindow、reduceByKeyAndWindow、countByValueAndWindow.</li>
+</ul>
+<h3 id="高级操作"><a href="#高级操作" class="headerlink" title="高级操作"></a>高级操作</h3><h5 id="1、缓存与持久化"><a href="#1、缓存与持久化" class="headerlink" title="1、缓存与持久化"></a>1、缓存与持久化</h5><p>窗口函数和updateStateByKey会默认自动持久化<br>从网络接收数据的输入DStream，默认持久化级别是复制数据到两个节点上，以确保容错能力。</p>
+<h4 id="2、打包、发布和监控"><a href="#2、打包、发布和监控" class="headerlink" title="2、打包、发布和监控"></a>2、打包、发布和监控</h4><ul>
+<li>需要提供spark之外的其他所有第三方jar包。</li>
+<li>最好用hdfs或s3的文件系统目录来配置检查点</li>
+<li>配置driver程序自动重启<blockquote>
+<p>standalone模式提交用–deploy-mode cluster –supervise,YARN下选择yarn-cluster，Mesos下通过Marathon协助实现。</p>
+</blockquote>
+</li>
+<li>从1.2开始，支持Write Ahead Logs(WAL)，开启之后，所有收到的数据在处理前会写到检查点目录下，可确保driver重启期间数据不丢失。设置spark.streaming.receiver.writeAheadLog.enable为true开启，会降低数据接收的吞吐量，不过可以通过采用<strong>并发接收</strong>的方式降低影响。如果开启了WAL，可以关闭接受数据时的复制机制：<strong>设置输入DStream的存储级别为StorageLevel.MEMORY_AND_DISK_SER</strong>。</li>
+</ul>
+<h4 id="3、更新程序代码"><a href="#3、更新程序代码" class="headerlink" title="3、更新程序代码"></a>3、更新程序代码</h4><p>为了不丢失数据，可采用一下两种方法：</p>
+<ul>
+<li><strong>新旧程序同时运行。</strong> 等新的程序运行之后，在停止旧的程序。这种方式要求数据源支持同时向新、旧两个版本的程序发数据</li>
+<li><strong>先停止旧的程序再启动新的程序。</strong><br>要保证旧的程序是被优雅的关闭，确保关闭前接收到的数据都处理完了。这种方式只适用于<strong>支持缓存数据功能</strong>的数据源，如Kafka、Flume。启动新的程序时在读取前一个程序的检查点信息时可能出错，因为检查点中一些对象是序列化存储，新的对象结构可能已经改变了。解决办法是：<strong>用新的检查点目录</strong>或者<strong>删除旧的检查点目录下的所有内容</strong>。</li>
+</ul>
+<h2 id="spark-streaming调优方向"><a href="#spark-streaming调优方向" class="headerlink" title="spark streaming调优方向"></a>spark streaming调优方向</h2><h3 id="一、每个批次的处理时间尽可能短"><a href="#一、每个批次的处理时间尽可能短" class="headerlink" title="一、每个批次的处理时间尽可能短"></a>一、每个批次的处理时间尽可能短</h3><h3 id="二、收到数据后尽可能快的处理"><a href="#二、收到数据后尽可能快的处理" class="headerlink" title="二、收到数据后尽可能快的处理"></a>二、收到数据后尽可能快的处理</h3><h2 id="优化方法"><a href="#优化方法" class="headerlink" title="优化方法"></a>优化方法</h2><h3 id="一、减少批处理的时间"><a href="#一、减少批处理的时间" class="headerlink" title="一、减少批处理的时间"></a>一、减少批处理的时间</h3><h4 id="1、增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。"><a href="#1、增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。" class="headerlink" title="1、增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。"></a>1、增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。</h4><blockquote>
+<p>默认每个InputDStream只会创建一个接收器，我们可以创建多个让它们接收不同的数据分区，以实现并行接收。</p>
+</blockquote>
+<blockquote>
+<p>比如1个接收2个topic的Kafka InputDStream可以优化为2个InputDStream，各接收一个topic，然后在合并。</p>
+</blockquote>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> numStreams = <span class="number">5</span></span><br><span class="line"><span class="keyword">val</span> kafkaStreams = (<span class="number">1</span> to numStreams).map&#123;</span><br><span class="line">    i =&gt; <span class="type">KafkaUtils</span>.createStream(...)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">val</span> unifiedStream = streamingContext.union(kafkaStreams)</span><br><span class="line">unifiedStream.print()</span><br></pre></td></tr></table></figure>
+<h4 id="2、数据处理的并发度"><a href="#2、数据处理的并发度" class="headerlink" title="2、数据处理的并发度"></a>2、数据处理的并发度</h4><blockquote>
+<p>调整选项spark.default.parallelism</p>
+</blockquote>
+<h4 id="3、task启动的额外开销"><a href="#3、task启动的额外开销" class="headerlink" title="3、task启动的额外开销"></a>3、task启动的额外开销</h4><blockquote>
+<p>如果task启动过于频繁（比如每秒50次），额外的开销可能非常高，甚至无法达到实时计算要求。</p>
+</blockquote>
+<h3 id="二、设置合理批次间隔时间"><a href="#二、设置合理批次间隔时间" class="headerlink" title="二、设置合理批次间隔时间"></a>二、设置合理批次间隔时间</h3><blockquote>
+<p>一般来说短时间间隔会导致更多的额外开销，以及无法完成的风险，所以前期采取相对保守的方法，将间隔设置为5~10秒。然后通过观察运行数据确保系统足够实时，每个间隔的实际计算时间远小于间隔时间，再逐渐缩短间隔时间。</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/30/scala-log-handle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zzzhy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="running-in-sky">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/30/scala-log-handle/" itemprop="url">scala 日志处理实例</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-30T00:24:31+08:00">
+                2019-10-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/10/30/scala-log-handle/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/10/30/scala-log-handle/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//日志格式</span></span><br><span class="line"><span class="comment">//100.97.15.241 - - [19/Aug/2016:11:05:47 +0800] "GET /view.php HTTP/1.0" 200 0 "http://www.gooogle.cn/search?q=hadoop" "Mozilla/5.0 (compatible;MSIE 10.0;Windows NT 6.2; Trident/6.0" "-"</span></span><br><span class="line"><span class="comment">// 1. 总PV页面浏览量    </span></span><br><span class="line">lines.count().print()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 各IP的PV，按PV倒序</span></span><br><span class="line"><span class="comment">//   空格分隔的第一个字段就是IP</span></span><br><span class="line">lines.map(line =&gt; &#123;(line.split(<span class="string">" "</span>)(<span class="number">0</span>), <span class="number">1</span>)&#125;).reduceByKey(_ + _).transform(rdd =&gt; &#123;</span><br><span class="line">  rdd.map(ip_pv =&gt; (ip_pv._2, ip_pv._1)).</span><br><span class="line">  sortByKey(<span class="literal">false</span>).</span><br><span class="line">  map(ip_pv =&gt; (ip_pv._2, ip_pv._1))</span><br><span class="line">&#125;).print()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 搜索引擎PV</span></span><br><span class="line"><span class="keyword">val</span> refer = lines.map(_.split(<span class="string">"\""</span>)(<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 先输出搜索引擎和查询关键词，避免统计搜索关键词时重复计算</span></span><br><span class="line"><span class="comment">// 输出(host, query_keys)</span></span><br><span class="line"><span class="keyword">val</span> searchEnginInfo = refer.map(r =&gt; &#123;</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">val</span> f = r.split('/')</span><br><span class="line">    <span class="comment">//搜索关键字的key</span></span><br><span class="line">    <span class="keyword">val</span> searchEngines = <span class="type">Map</span>(</span><br><span class="line">        <span class="string">"www.google.cn"</span> -&gt; <span class="string">"q"</span>,</span><br><span class="line">        <span class="string">"www.yahoo.com"</span> -&gt; <span class="string">"p"</span>,</span><br><span class="line">        <span class="string">"cn.bing.com"</span> -&gt; <span class="string">"q"</span>,</span><br><span class="line">        <span class="string">"www.baidu.com"</span> -&gt; <span class="string">"wd"</span>,</span><br><span class="line">        <span class="string">"www.sogou.com"</span> -&gt; <span class="string">"query"</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (f.length &gt; <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">val</span> host = f(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (searchEngines.contains(host)) &#123;</span><br><span class="line">            <span class="keyword">val</span> query = r.split('?')(<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">if</span> (query.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">val</span> arr_search_q = query.split('&amp;').filter(_.indexOf(searchEngines(host)+<span class="string">"="</span>) == <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">if</span> (arr_search_q.length &gt; <span class="number">0</span>)</span><br><span class="line">                    (host, arr_search_q(<span class="number">0</span>).split('=')(<span class="number">1</span>))</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    (host, <span class="string">""</span>)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                (host, <span class="string">""</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span></span><br><span class="line">            (<span class="string">""</span>, <span class="string">""</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span></span><br><span class="line">        (<span class="string">""</span>, <span class="string">""</span>)</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出搜索引擎PV</span></span><br><span class="line">searchEnginInfo.filter(_._1.length &gt; <span class="number">0</span>).map(p =&gt; &#123;(p._1, <span class="number">1</span>)&#125;).reduceByKey(_ + _).print()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 关键词PV</span></span><br><span class="line">searchEnginInfo.filter(_._2.length &gt; <span class="number">0</span>).map(p =&gt; &#123;(p._2, <span class="number">1</span>)&#125;).reduceByKey(_ + _).print()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. 终端类型PV</span></span><br><span class="line">lines.map(_.split(<span class="string">"\""</span>)(<span class="number">5</span>)).map(agent =&gt; &#123;</span><br><span class="line">    <span class="keyword">val</span> types = <span class="type">Seq</span>(<span class="string">"iPhone"</span>, <span class="string">"Android"</span>)</span><br><span class="line">    <span class="keyword">var</span> r = <span class="string">"Default"</span></span><br><span class="line">    <span class="keyword">for</span> (t &lt;- types) &#123;</span><br><span class="line">        <span class="keyword">if</span> (agent.indexOf(t) != <span class="number">-1</span>)</span><br><span class="line">            r = t</span><br><span class="line">    &#125;</span><br><span class="line">    (r, <span class="number">1</span>)</span><br><span class="line">&#125;).reduceByKey(_ + _).print()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 6. 各页面PV</span></span><br><span class="line">lines.map(line =&gt; &#123;(line.split(<span class="string">"\""</span>)(<span class="number">1</span>).split(<span class="string">" "</span>)(<span class="number">1</span>), <span class="number">1</span>)&#125;).reduceByKey(_ + _).print()</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/30/scala-learning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -321,7 +791,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/10/30/scala-learning/" itemprop="url">scala_learning</a></h1>
+                <a class="post-title-link" href="/2019/10/30/scala-learning/" itemprop="url">scala 学习入门</a></h1>
         
 
         <div class="post-meta">
@@ -406,8 +876,7 @@
       
         
           
-            <p>#scala 学习</p>
-<h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><blockquote>
+            <h2 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h2><blockquote>
 <p>大部分都能隐式转换，Byte、Short需要显式指定</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val little : Byte = <span class="number">3</span></span><br><span class="line">val little:Short = <span class="number">3</span></span><br></pre></td></tr></table></figure>
@@ -587,8 +1056,8 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">日志</span>
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">文章</span>
               </a>
             </div>
           
@@ -609,7 +1078,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
