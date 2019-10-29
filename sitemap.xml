@@ -2,23 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2019/10/30/spark-streaming-tuning/</loc>
-    
-    <lastmod>2019-10-29T17:48:29.651Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2019/10/30/sql-tuning/</loc>
     
-    <lastmod>2019-10-29T17:48:13.973Z</lastmod>
+    <lastmod>2019-10-29T17:54:22.101Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://yoursite.com/2019/10/30/spark-streaming-indoor/</loc>
     
-    <lastmod>2019-10-29T17:47:23.488Z</lastmod>
+    <lastmod>2019-10-29T17:54:07.406Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/10/30/spark-streaming-tuning/</loc>
+    
+    <lastmod>2019-10-29T17:53:45.115Z</lastmod>
     
   </url>
   

@@ -592,7 +592,7 @@
 <li>定期分析表和检查表。<br>分析表的语法：ANALYZE [LOCAL | NO_WRITE_TO_BINLOG] TABLE tb1_name[, tbl_name]…<br>以上语句用于分析和存储表的关键字分布，分析的结果将可以使得系统得到准确的统计信息，使得SQL能够生成正确的执行计划。如果用户感觉实际执行计划并不是预期的执行计划，执行一次分析表可能会解决问题。在分析期间，使用一个读取锁定对表进行锁定。这对于MyISAM，DBD和InnoDB表有作用。<br>例如分析一个数据表：analyze table table_name<br>检查表的语法：CHECK TABLE tb1_name[,tbl_name]…[option]…option = {QUICK | FAST | MEDIUM | EXTENDED | CHANGED}<br>检查表的作用是检查一个或多个表是否有错误，CHECK TABLE 对MyISAM 和 InnoDB表有作用，对于MyISAM表，关键字统计数据被更新<br>CHECK TABLE 也可以检查视图是否有错误，比如在视图定义中被引用的表不存在。</li>
 <li>定期优化表。<br>优化表的语法：OPTIMIZE [LOCAL | NO_WRITE_TO_BINLOG] TABLE tb1_name [,tbl_name]…<br>如果删除了表的一大部分，或者如果已经对含有可变长度行的表(含有 VARCHAR、BLOB或TEXT列的表)进行更多更改，则应使用OPTIMIZE TABLE命令来进行表优化。这个命令可以将表中的空间碎片进行合并，并且可以消除由于删除或者更新造成的空间浪费，但OPTIMIZE TABLE 命令只对MyISAM、 BDB 和InnoDB表起作用。<br>例如： optimize table table_name<br>注意： analyze、check、optimize执行期间将对表进行锁定，因此一定注意要在MySQL数据库不繁忙的时候执行相关的操作。</li>
 </ol>
-<h3 id="补充："><a href="#补充：" class="headerlink" title="补充："></a>补充：</h3><ol>
+<h3 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h3><ol>
 <li>在海量查询时尽量少用格式转换。</li>
 <li>ORDER BY 和 GROPU BY:使用 ORDER BY 和 GROUP BY 短语，任何一种索引都有助于 SELECT 的性能提高。</li>
 <li>任何对列的操作都将导致表扫描，它包括数据库教程函数、计算表达式等等，查询时要尽可能将操作移 至等号右边。</li>
@@ -917,24 +917,24 @@
           
             <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建一个 Spark Streaming 应用程序的4 个步骤</span></span><br><span class="line">scala&gt; val ssc = new StreamingContext(sc,Seconds(5))</span><br><span class="line"></span><br><span class="line">scala&gt; val lines = ssc.socketTextStream(<span class="string">"localhost"</span>,9999)</span><br><span class="line"></span><br><span class="line">scala&gt; val words = lines.flatMap(_.split(<span class="string">" "</span>))</span><br><span class="line"></span><br><span class="line">scala&gt; val pairs = words.map(word =&gt; (word,1))</span><br><span class="line"></span><br><span class="line">scala&gt; val wordCounts = pairs.reduceByKey(_+_)</span><br><span class="line"></span><br><span class="line">scala&gt; wordCounts.print()</span><br><span class="line"></span><br><span class="line">scala&gt; ssc.start()</span><br></pre></td></tr></table></figure>
 
-<h2 id="1、构建-Streaming-Context-对象"><a href="#1、构建-Streaming-Context-对象" class="headerlink" title="1、构建 Streaming Context 对象"></a>1、构建 Streaming Context 对象</h2><blockquote>
+<h2 id="构建-Streaming-Context-对象"><a href="#构建-Streaming-Context-对象" class="headerlink" title="构建 Streaming Context 对象"></a>构建 Streaming Context 对象</h2><blockquote>
 <p>使用 Spark Streaming 需要创建 StreamingContext 对象。Spark Streaming 需要制定处理数据的时间间隔，如 1s，那么 Spark Streaming 会以1s为时间窗口进行数据处理。此参数需要根据用户的需求和集群的处理能力进行适当的设置，它的生命周期会伴随整个StreamingContext 的生命周期且无法重新设置。因此，用户需要从需求和集群处理能力出发，设置一个合理的时间间隔。</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SparkConf sparkConf = <span class="keyword">new</span> SparkConf().setAppName(<span class="string">"JavaRecoverableNetworkWordCount"</span>);</span><br><span class="line"> <span class="comment">// Create the context with a 1 second batch size</span></span><br><span class="line"> <span class="comment">//首先通过 JavaStreamingContextFactory 创建 Spark Streaming 过程。</span></span><br><span class="line"> JavaStreamingContext ssc = <span class="keyword">new</span> JavaStreamingContext(sparkConf, Durations.seconds(<span class="number">1</span>));</span><br><span class="line"> ssc.checkpoint(checkpointDirectory);</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>Spark Streaming 有特定的窗口操作，窗口操作涉及两个参数：一个是滑动窗口的宽度（Window Duration）；另一个是窗口滑动的频率（Slide Duration），这两个参数必须是 batch size 的倍数。例如以过去 5 秒钟为一个输入窗口，每 1 秒统计一下 WordCount，那么我们会将过去 5 秒钟的每一秒钟的 WordCount 都进行统计，然后进行叠加，得出这个窗口中的单词统计。</p>
 </blockquote>
-<h2 id="2、创建-InputDStream"><a href="#2、创建-InputDStream" class="headerlink" title="2、创建 InputDStream"></a>2、创建 InputDStream</h2><blockquote>
+<h2 id="创建-InputDStream"><a href="#创建-InputDStream" class="headerlink" title="创建 InputDStream"></a>创建 InputDStream</h2><blockquote>
 <p>如同 Strom 的 Spout 一样，Spark Streaming 需要指明数据源。例如 socketTextStream，Spark Streaming 将以套接字连接作为数据源读取数据。当然，Spark Streaming 支持多种不同的数据源，包括 kafkaStream、flumeStream、fileStream、networkStream 等。</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JavaReceiverInputDStream&lt;<span class="built_in">String</span>&gt; lines = ssc.socketTextStream(ip, port);</span><br></pre></td></tr></table></figure>
 
-<h2 id="3、操作-DStream"><a href="#3、操作-DStream" class="headerlink" title="3、操作 DStream"></a>3、操作 DStream</h2><blockquote>
+<h2 id="操作-DStream"><a href="#操作-DStream" class="headerlink" title="操作 DStream"></a>操作 DStream</h2><blockquote>
 <p>对于从数据源得到的DStream，用户可以在其基础上进行各种操作，如 WordCount 的操作就是一个典型的单词计数执行流程，即对当前时间窗口内从数据源得到的数据进行分词，然后利用 MapReduce 算法映射和计算，最后使用 print() 输出结果。</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">JavaDStream&lt;<span class="built_in">String</span>&gt; words = lines.flatMap(s -&gt; Lists.newArrayList(SPACE.split(s)));</span><br><span class="line"> JavaPairDStream&lt;<span class="built_in">String</span>, Integer&gt; wordCounts = words.mapToPair(w -&gt; <span class="keyword">new</span> Tuple2&lt;<span class="built_in">String</span>, Integer&gt;(w, <span class="number">1</span>)).reduceByKey((a,b)-&gt;a+b);</span><br><span class="line"></span><br><span class="line"> wordCounts.foreachRDD((rdd,time) -&gt; &#123;</span><br><span class="line">    <span class="built_in">String</span> counts = <span class="string">"Counts at time "</span> + time + <span class="string">" "</span> + rdd.collect();</span><br><span class="line">    System.out.println(counts);</span><br><span class="line">    System.out.println(<span class="string">"Appending to "</span> + outputFile.getAbsolutePath());</span><br><span class="line">    Files.append(counts + <span class="string">"\n"</span>, outputFile, Charset.defaultCharset());</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
 
-<h2 id="4、启动-Spark-Streaming"><a href="#4、启动-Spark-Streaming" class="headerlink" title="4、启动 Spark Streaming"></a>4、启动 Spark Streaming</h2><blockquote>
+<h2 id="启动-Spark-Streaming"><a href="#启动-Spark-Streaming" class="headerlink" title="启动 Spark Streaming"></a>启动 Spark Streaming</h2><blockquote>
 <p>之前的所有步骤只创建了执行流程，程序没有有真正连接上数据源，也没有对数据进行任何操作，只是设定好了所有的执行计算，当 ssc.start() 启动后，程序才真正进行所有预期的操作。</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssc.start();</span><br><span class="line">ssc.awaitTermination();</span><br></pre></td></tr></table></figure>
@@ -1122,8 +1122,8 @@
 <ul>
 <li>窗口函数<br>用windowLength、slideInterval生成一个带窗口的DStream，也可以使用加窗口参数的方法：countByWindow、reduceByWindow、reduceByKeyAndWindow、countByValueAndWindow.</li>
 </ul>
-<h3 id="高级操作"><a href="#高级操作" class="headerlink" title="高级操作"></a>高级操作</h3><h4 id="1、缓存与持久化"><a href="#1、缓存与持久化" class="headerlink" title="1、缓存与持久化"></a>1、缓存与持久化</h4><p>窗口函数和updateStateByKey会默认自动持久化<br>从网络接收数据的输入DStream，默认持久化级别是复制数据到两个节点上，以确保容错能力。</p>
-<h4 id="2、打包、发布和监控"><a href="#2、打包、发布和监控" class="headerlink" title="2、打包、发布和监控"></a>2、打包、发布和监控</h4><ul>
+<h3 id="高级操作"><a href="#高级操作" class="headerlink" title="高级操作"></a>高级操作</h3><h4 id="缓存与持久化"><a href="#缓存与持久化" class="headerlink" title="缓存与持久化"></a>缓存与持久化</h4><p>窗口函数和updateStateByKey会默认自动持久化<br>从网络接收数据的输入DStream，默认持久化级别是复制数据到两个节点上，以确保容错能力。</p>
+<h4 id="打包、发布和监控"><a href="#打包、发布和监控" class="headerlink" title="打包、发布和监控"></a>打包、发布和监控</h4><ul>
 <li>需要提供spark之外的其他所有第三方jar包。</li>
 <li>最好用hdfs或s3的文件系统目录来配置检查点</li>
 <li>配置driver程序自动重启<blockquote>
@@ -1132,12 +1132,12 @@
 </li>
 <li>从1.2开始，支持Write Ahead Logs(WAL)，开启之后，所有收到的数据在处理前会写到检查点目录下，可确保driver重启期间数据不丢失。设置spark.streaming.receiver.writeAheadLog.enable为true开启，会降低数据接收的吞吐量，不过可以通过采用<strong>并发接收</strong>的方式降低影响。如果开启了WAL，可以关闭接受数据时的复制机制：<strong>设置输入DStream的存储级别为StorageLevel.MEMORY_AND_DISK_SER</strong>。</li>
 </ul>
-<h4 id="3、更新程序代码"><a href="#3、更新程序代码" class="headerlink" title="3、更新程序代码"></a>3、更新程序代码</h4><p>为了不丢失数据，可采用一下两种方法：</p>
+<h4 id="更新程序代码"><a href="#更新程序代码" class="headerlink" title="更新程序代码"></a>更新程序代码</h4><p>为了不丢失数据，可采用一下两种方法：</p>
 <ul>
 <li><strong>新旧程序同时运行。</strong> 等新的程序运行之后，在停止旧的程序。这种方式要求数据源支持同时向新、旧两个版本的程序发数据</li>
 <li><strong>先停止旧的程序再启动新的程序。</strong><br>要保证旧的程序是被优雅的关闭，确保关闭前接收到的数据都处理完了。这种方式只适用于<strong>支持缓存数据功能</strong>的数据源，如Kafka、Flume。启动新的程序时在读取前一个程序的检查点信息时可能出错，因为检查点中一些对象是序列化存储，新的对象结构可能已经改变了。解决办法是：<strong>用新的检查点目录</strong>或者<strong>删除旧的检查点目录下的所有内容</strong>。</li>
 </ul>
-<h2 id="spark-streaming调优方向"><a href="#spark-streaming调优方向" class="headerlink" title="spark streaming调优方向"></a>spark streaming调优方向</h2><h3 id="一、每个批次的处理时间尽可能短"><a href="#一、每个批次的处理时间尽可能短" class="headerlink" title="一、每个批次的处理时间尽可能短"></a>一、每个批次的处理时间尽可能短</h3><h3 id="二、收到数据后尽可能快的处理"><a href="#二、收到数据后尽可能快的处理" class="headerlink" title="二、收到数据后尽可能快的处理"></a>二、收到数据后尽可能快的处理</h3><h2 id="优化方法"><a href="#优化方法" class="headerlink" title="优化方法"></a>优化方法</h2><h3 id="一、减少批处理的时间"><a href="#一、减少批处理的时间" class="headerlink" title="一、减少批处理的时间"></a>一、减少批处理的时间</h3><h4 id="1、增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。"><a href="#1、增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。" class="headerlink" title="1、增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。"></a>1、增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。</h4><blockquote>
+<h2 id="spark-streaming调优方向"><a href="#spark-streaming调优方向" class="headerlink" title="spark streaming调优方向"></a>spark streaming调优方向</h2><h3 id="每个批次的处理时间尽可能短"><a href="#每个批次的处理时间尽可能短" class="headerlink" title="每个批次的处理时间尽可能短"></a>每个批次的处理时间尽可能短</h3><h3 id="收到数据后尽可能快的处理"><a href="#收到数据后尽可能快的处理" class="headerlink" title="收到数据后尽可能快的处理"></a>收到数据后尽可能快的处理</h3><h2 id="优化方法"><a href="#优化方法" class="headerlink" title="优化方法"></a>优化方法</h2><h3 id="减少批处理的时间"><a href="#减少批处理的时间" class="headerlink" title="减少批处理的时间"></a>减少批处理的时间</h3><h4 id="增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。"><a href="#增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。" class="headerlink" title="增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。"></a>增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。</h4><blockquote>
 <p>默认每个InputDStream只会创建一个接收器，我们可以创建多个让它们接收不同的数据分区，以实现并行接收。</p>
 </blockquote>
 <blockquote>
@@ -1145,13 +1145,13 @@
 </blockquote>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> numStreams = <span class="number">5</span></span><br><span class="line"><span class="keyword">val</span> kafkaStreams = (<span class="number">1</span> to numStreams).map&#123;</span><br><span class="line">    i =&gt; <span class="type">KafkaUtils</span>.createStream(...)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">val</span> unifiedStream = streamingContext.union(kafkaStreams)</span><br><span class="line">unifiedStream.print()</span><br></pre></td></tr></table></figure>
 
-<h4 id="2、数据处理的并发度"><a href="#2、数据处理的并发度" class="headerlink" title="2、数据处理的并发度"></a>2、数据处理的并发度</h4><blockquote>
+<h4 id="数据处理的并发度"><a href="#数据处理的并发度" class="headerlink" title="数据处理的并发度"></a>数据处理的并发度</h4><blockquote>
 <p>调整选项spark.default.parallelism</p>
 </blockquote>
-<h4 id="3、task启动的额外开销"><a href="#3、task启动的额外开销" class="headerlink" title="3、task启动的额外开销"></a>3、task启动的额外开销</h4><blockquote>
+<h4 id="task启动的额外开销"><a href="#task启动的额外开销" class="headerlink" title="task启动的额外开销"></a>task启动的额外开销</h4><blockquote>
 <p>如果task启动过于频繁（比如每秒50次），额外的开销可能非常高，甚至无法达到实时计算要求。</p>
 </blockquote>
-<h3 id="二、设置合理批次间隔时间"><a href="#二、设置合理批次间隔时间" class="headerlink" title="二、设置合理批次间隔时间"></a>二、设置合理批次间隔时间</h3><blockquote>
+<h3 id="设置合理批次间隔时间"><a href="#设置合理批次间隔时间" class="headerlink" title="设置合理批次间隔时间"></a>设置合理批次间隔时间</h3><blockquote>
 <p>一般来说短时间间隔会导致更多的额外开销，以及无法完成的风险，所以前期采取相对保守的方法，将间隔设置为5~10秒。然后通过观察运行数据确保系统足够实时，每个间隔的实际计算时间远小于间隔时间，再逐渐缩短间隔时间。</p>
 </blockquote>
 
