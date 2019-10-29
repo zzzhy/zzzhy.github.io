@@ -2,23 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2019/10/30/spark-streaming-tuning/</loc>
+    <loc>http://yoursite.com/2019/10/30/nginx-compile-opts/</loc>
     
-    <lastmod>2019-10-29T17:23:28.079Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/10/30/spark-streaming-indoor/</loc>
-    
-    <lastmod>2019-10-29T17:23:03.299Z</lastmod>
+    <lastmod>2019-10-29T17:40:48.750Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://yoursite.com/2019/10/30/scala-log-handle/</loc>
     
-    <lastmod>2019-10-29T17:22:50.232Z</lastmod>
+    <lastmod>2019-10-29T17:36:01.609Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/10/30/scala-learning/</loc>
+    
+    <lastmod>2019-10-29T17:35:45.036Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/10/30/spark-streaming-indoor/</loc>
+    
+    <lastmod>2019-10-29T17:33:01.748Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/10/30/spark-streaming-tuning/</loc>
+    
+    <lastmod>2019-10-29T17:32:07.157Z</lastmod>
     
   </url>
   
@@ -40,13 +54,6 @@
     <loc>http://yoursite.com/categories/index.html</loc>
     
     <lastmod>2019-10-29T16:16:09.699Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/10/30/scala-learning/</loc>
-    
-    <lastmod>2019-10-29T16:11:25.607Z</lastmod>
     
   </url>
   

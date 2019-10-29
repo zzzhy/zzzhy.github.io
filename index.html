@@ -302,6 +302,159 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/30/nginx-compile-opts/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zzzhy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="running-in-sky">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/30/nginx-compile-opts/" itemprop="url">nginx编译参数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-30T01:39:52+08:00">
+                2019-10-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">nginx</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/10/30/nginx-compile-opts/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/10/30/nginx-compile-opts/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># nginx参数：</span></span><br><span class="line">–prefix= 指向安装目录</span><br><span class="line">–sbin-path 指向（执行）程序文件（nginx）</span><br><span class="line">–conf-path= 指向配置文件（nginx.conf）</span><br><span class="line">–error-log-path= 指向错误日志目录</span><br><span class="line">–pid-path= 指向pid文件（nginx.pid）</span><br><span class="line">–lock-path= 指向lock文件（nginx.lock）（安装文件锁定，防止安装文件被别人利用，或自己误操作。）</span><br><span class="line">–user= 指定程序运行时的非特权用户</span><br><span class="line">–group= 指定程序运行时的非特权用户组</span><br><span class="line">–builddir= 指向编译目录</span><br><span class="line">–with-rtsig_module 启用rtsig模块支持（实时信号）</span><br><span class="line">–with-select_module 启用select模块支持（一种轮询模式,不推荐在高载环境下使用）禁用：–without-select_module</span><br><span class="line">–with-poll_module 启用poll模块支持（功能与select相同，与select特性相同，为一种轮询模式,不推荐在高载环境下使用）</span><br><span class="line">–with-file-aio 启用file aio支持（一种APL文件传输格式）</span><br><span class="line">–with-ipv6 启用ipv6支持</span><br><span class="line">–with-http_ssl_module 启用ngx_http_ssl_module支持（使支持https请求，需已安装openssl）</span><br><span class="line">–with-http_realip_module 启用ngx_http_realip_module支持（这个模块允许从请求标头更改客户端的IP地址值，默认为关）</span><br><span class="line">–with-http_addition_module 启用ngx_http_addition_module支持（作为一个输出过滤器，支持不完全缓冲，分部分响应请求）</span><br><span class="line">–with-http_xslt_module 启用ngx_http_xslt_module支持（过滤转换XML请求）</span><br><span class="line">–with-http_image_filter_module 启用ngx_http_image_filter_module支持（传输JPEG/GIF/PNG 图片的一个过滤器）（默认为不启用。gd库要用到）</span><br><span class="line">–with-http_geoip_module 启用ngx_http_geoip_module支持（该模块创建基于与MaxMind GeoIP二进制文件相配的客户端IP地址的ngx_http_geoip_module变量）</span><br><span class="line">–with-http_sub_module 启用ngx_http_sub_module支持（允许用一些其他文本替换nginx响应中的一些文本）</span><br><span class="line">–with-http_dav_module 启用ngx_http_dav_module支持（增加PUT,DELETE,MKCOL：创建集合,COPY和MOVE方法）默认情况下为关闭，需编译开启</span><br><span class="line">–with-http_flv_module 启用ngx_http_flv_module支持（提供寻求内存使用基于时间的偏移量文件）</span><br><span class="line">–with-http_gzip_static_module 启用ngx_http_gzip_static_module支持（在线实时压缩输出数据流）</span><br><span class="line">–with-http_random_index_module 启用ngx_http_random_index_module支持（从目录中随机挑选一个目录索引）</span><br><span class="line">–with-http_secure_link_module 启用ngx_http_secure_link_module支持（计算和检查要求所需的安全链接网址）</span><br><span class="line">–with-http_degradation_module  启用ngx_http_degradation_module支持（允许在内存不足的情况下返回204或444码）</span><br><span class="line">–with-http_stub_status_module 启用ngx_http_stub_status_module支持（获取nginx自上次启动以来的工作状态）</span><br><span class="line">–without-http_charset_module 禁用ngx_http_charset_module支持（重新编码web页面，但只能是一个方向–服务器端到客户端，并且只有一个字节的编码可以被重新编码）</span><br><span class="line">–without-http_gzip_module 禁用ngx_http_gzip_module支持（该模块同-with-http_gzip_static_module功能一样）</span><br><span class="line">–without-http_ssi_module 禁用ngx_http_ssi_module支持（该模块提供了一个在输入端处理处理服务器包含文件（SSI）的过滤器，目前支持SSI命令的列表是不完整的）</span><br><span class="line">–without-http_userid_module 禁用ngx_http_userid_module支持（该模块用来处理用来确定客户端后续请求的cookies）</span><br><span class="line">–without-http_access_module 禁用ngx_http_access_module支持（该模块提供了一个简单的基于主机的访问控制。允许/拒绝基于ip地址）</span><br><span class="line">–without-http_auth_basic_module禁用ngx_http_auth_basic_module（该模块是可以使用用户名和密码基于http基本认证方法来保护你的站点或其部分内容）</span><br><span class="line">–without-http_autoindex_module 禁用<span class="built_in">disable</span> ngx_http_autoindex_module支持（该模块用于自动生成目录列表，只在ngx_http_index_module模块未找到索引文件时发出请求。）</span><br><span class="line">–without-http_geo_module 禁用ngx_http_geo_module支持（创建一些变量，其值依赖于客户端的IP地址）</span><br><span class="line">–without-http_map_module 禁用ngx_http_map_module支持（使用任意的键/值对设置配置变量）</span><br><span class="line">–without-http_split_clients_module 禁用ngx_http_split_clients_module支持（该模块用来基于某些条件划分用户。条件如：ip地址、报头、cookies等等）</span><br><span class="line">–without-http_referer_module 禁用<span class="built_in">disable</span> ngx_http_referer_module支持（该模块用来过滤请求，拒绝报头中Referer值不正确的请求）</span><br><span class="line">–without-http_rewrite_module 禁用ngx_http_rewrite_module支持（该模块允许使用正则表达式改变URI，并且根据变量来转向以及选择配置。如果在server级别设置该选项，那么他们将在 location之前生效。如果在location还有更进一步的重写规则，location部分的规则依然会被执行。如果这个URI重写是因为location部分的规则造成的，那么 location部分会再次被执行作为新的URI。 这个循环会执行10次，然后Nginx会返回一个500错误。）</span><br><span class="line">–without-http_proxy_module 禁用ngx_http_proxy_module支持（有关代理服务器）</span><br><span class="line">–without-http_fastcgi_module 禁用ngx_http_fastcgi_module支持（该模块允许Nginx 与FastCGI 进程交互，并通过传递参数来控制FastCGI 进程工作。 ）FastCGI一个常驻型的公共网关接口。</span><br><span class="line">–without-http_uwsgi_module 禁用ngx_http_uwsgi_module支持（该模块用来医用uwsgi协议，uWSGI服务器相关）</span><br><span class="line">–without-http_scgi_module 禁用ngx_http_scgi_module支持（该模块用来启用SCGI协议支持，SCGI协议是CGI协议的替代。它是一种应用程序与HTTP服务接口标准。它有些像FastCGI但他的设计 更容易实现。）</span><br><span class="line">–without-http_memcached_module 禁用ngx_http_memcached_module支持（该模块用来提供简单的缓存，以提高系统效率）</span><br><span class="line">-without-http_limit_zone_module 禁用ngx_http_limit_zone_module支持（该模块可以针对条件，进行会话的并发连接数控制）</span><br><span class="line">–without-http_limit_req_module 禁用ngx_http_limit_req_module支持（该模块允许你对于一个地址进行请求数量的限制用一个给定的session或一个特定的事件）</span><br><span class="line">–without-http_empty_gif_module 禁用ngx_http_empty_gif_module支持（该模块在内存中常驻了一个1*1的透明GIF图像，可以被非常快速的调用）</span><br><span class="line">–without-http_browser_module 禁用ngx_http_browser_module支持（该模块用来创建依赖于请求报头的值。如果浏览器为modern ，则<span class="variable">$modern_browser</span>等于modern_browser_value指令分配的值；如 果浏览器为old，则<span class="variable">$ancient_browser</span>等于 ancient_browser_value指令分配的值；如果浏览器为 MSIE中的任意版本，则 <span class="variable">$msie</span>等于1）</span><br><span class="line">–without-http_upstream_ip_hash_module 禁用ngx_http_upstream_ip_hash_module支持（该模块用于简单的负载均衡）</span><br><span class="line">–with-http_perl_module 启用ngx_http_perl_module支持（该模块使nginx可以直接使用perl或通过ssi调用perl）</span><br><span class="line">–with-perl_modules_path= 设定perl模块路径</span><br><span class="line">–with-perl= 设定perl库文件路径</span><br><span class="line">–http-log-path= 设定access <span class="built_in">log</span>路径</span><br><span class="line">–http-client-body-temp-path= 设定http客户端请求临时文件路径</span><br><span class="line">–http-proxy-temp-path= 设定http代理临时文件路径</span><br><span class="line">–http-fastcgi-temp-path= 设定http fastcgi临时文件路径</span><br><span class="line">–http-uwsgi-temp-path= 设定http uwsgi临时文件路径</span><br><span class="line">–http-scgi-temp-path= 设定http scgi临时文件路径</span><br><span class="line">-without-http 禁用http server功能</span><br><span class="line">–without-http-cache 禁用http cache功能</span><br><span class="line">–with-mail 启用POP3/IMAP4/SMTP代理模块支持</span><br><span class="line">–with-mail_ssl_module 启用ngx_mail_ssl_module支持</span><br><span class="line">–without-mail_pop3_module 禁用pop3协议（POP3即邮局协议的第3个版本,它是规定个人计算机如何连接到互联网上的邮件服务器进行收发邮件的协议。是因特网电子邮件的第一个离线协议标 准,POP3协议允许用户从服务器上把邮件存储到本地主机上,同时根据客户端的操作删除或保存在邮件服务器上的邮件。POP3协议是TCP/IP协议族中的一员，主要用于 支持使用客户端远程管理在服务器上的电子邮件）</span><br><span class="line">–without-mail_imap_module 禁用imap协议（一种邮件获取协议。它的主要作用是邮件客户端可以通过这种协议从邮件服务器上获取邮件的信息，下载邮件等。IMAP协议运行在TCP/IP协议之上， 使用的端口是143。它与POP3协议的主要区别是用户可以不用把所有的邮件全部下载，可以通过客户端直接对服务器上的邮件进行操作。）</span><br><span class="line">–without-mail_smtp_module 禁用smtp协议（SMTP即简单邮件传输协议,它是一组用于由源地址到目的地址传送邮件的规则，由它来控制信件的中转方式。SMTP协议属于TCP/IP协议族，它帮助每台计算机在发送或中转信件时找到下一个目的地。）</span><br><span class="line">–with-google_perftools_module 启用ngx_google_perftools_module支持（调试用，剖析程序性能瓶颈）</span><br><span class="line">–with-cpp_test_module 启用ngx_cpp_test_module支持</span><br><span class="line">–add-module= 启用外部模块支持</span><br><span class="line">–with-cc= 指向C编译器路径</span><br><span class="line">–with-cpp= 指向C预处理路径</span><br><span class="line">–with-cc-opt= 设置C编译器参数（PCRE库，需要指定–with-cc-opt=”-I /usr/<span class="built_in">local</span>/include”，如果使用select()函数则需要同时增加文件描述符数量，可以通过–with-cc- opt=”-D FD_SETSIZE=2048”指定。）</span><br><span class="line">–with-ld-opt= 设置连接文件参数。（PCRE库，需要指定–with-ld-opt=”-L /usr/<span class="built_in">local</span>/lib”。）</span><br><span class="line">–with-cpu-opt= 指定编译的CPU，可用的值为: pentium, pentiumpro, pentium3, pentium4, athlon, opteron, amd64, sparc32, sparc64, ppc64</span><br><span class="line">–without-pcre 禁用pcre库</span><br><span class="line">–with-pcre 启用pcre库</span><br><span class="line">–with-pcre= 指向pcre库文件目录</span><br><span class="line">–with-pcre-opt= 在编译时为pcre库设置附加参数</span><br><span class="line">–with-md5= 指向md5库文件目录（消息摘要算法第五版，用以提供消息的完整性保护）</span><br><span class="line">–with-md5-opt= 在编译时为md5库设置附加参数</span><br><span class="line">–with-md5-asm 使用md5汇编源</span><br><span class="line">–with-sha1= 指向sha1库目录（数字签名算法，主要用于数字签名）</span><br><span class="line">–with-sha1-opt= 在编译时为sha1库设置附加参数</span><br><span class="line">–with-sha1-asm 使用sha1汇编源</span><br><span class="line">–with-zlib= 指向zlib库目录</span><br><span class="line">–with-zlib-opt= 在编译时为zlib设置附加参数</span><br><span class="line">–with-zlib-asm= 为指定的CPU使用zlib汇编源进行优化，CPU类型为pentium, pentiumpro</span><br><span class="line">–with-libatomic 为原子内存的更新操作的实现提供一个架构</span><br><span class="line">–with-libatomic= 指向libatomic_ops安装目录</span><br><span class="line">–with-openssl= 指向openssl安装目录</span><br><span class="line">–with-openssl-opt 在编译时为openssl设置附加参数</span><br><span class="line">–with-debug 启用debug日志</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/30/sql-tuning/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -767,28 +920,32 @@
 <h2 id="1、构建-Streaming-Context-对象"><a href="#1、构建-Streaming-Context-对象" class="headerlink" title="1、构建 Streaming Context 对象"></a>1、构建 Streaming Context 对象</h2><blockquote>
 <p>使用 Spark Streaming 需要创建 StreamingContext 对象。Spark Streaming 需要制定处理数据的时间间隔，如 1s，那么 Spark Streaming 会以1s为时间窗口进行数据处理。此参数需要根据用户的需求和集群的处理能力进行适当的设置，它的生命周期会伴随整个StreamingContext 的生命周期且无法重新设置。因此，用户需要从需求和集群处理能力出发，设置一个合理的时间间隔。</p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SparkConf sparkConf = <span class="keyword">new</span> SparkConf().setAppName(<span class="string">"JavaRecoverableNetworkWordCount"</span>);</span><br><span class="line"> <span class="comment">// Create the context with a 1 second batch size</span></span><br><span class="line"> <span class="comment">//首先通过 JavaStreamingContextFactory 创建 Spark Streaming 过程。</span></span><br><span class="line"> JavaStreamingContext ssc = <span class="keyword">new</span> JavaStreamingContext(sparkConf, Durations.seconds(<span class="number">1</span>));</span><br><span class="line"> ssc.checkpoint(checkpointDirectory);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SparkConf sparkConf = <span class="keyword">new</span> SparkConf().setAppName(<span class="string">"JavaRecoverableNetworkWordCount"</span>);</span><br><span class="line"> <span class="comment">// Create the context with a 1 second batch size</span></span><br><span class="line"> <span class="comment">//首先通过 JavaStreamingContextFactory 创建 Spark Streaming 过程。</span></span><br><span class="line"> JavaStreamingContext ssc = <span class="keyword">new</span> JavaStreamingContext(sparkConf, Durations.seconds(<span class="number">1</span>));</span><br><span class="line"> ssc.checkpoint(checkpointDirectory);</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>Spark Streaming 有特定的窗口操作，窗口操作涉及两个参数：一个是滑动窗口的宽度（Window Duration）；另一个是窗口滑动的频率（Slide Duration），这两个参数必须是 batch size 的倍数。例如以过去 5 秒钟为一个输入窗口，每 1 秒统计一下 WordCount，那么我们会将过去 5 秒钟的每一秒钟的 WordCount 都进行统计，然后进行叠加，得出这个窗口中的单词统计。</p>
 </blockquote>
 <h2 id="2、创建-InputDStream"><a href="#2、创建-InputDStream" class="headerlink" title="2、创建 InputDStream"></a>2、创建 InputDStream</h2><blockquote>
 <p>如同 Strom 的 Spout 一样，Spark Streaming 需要指明数据源。例如 socketTextStream，Spark Streaming 将以套接字连接作为数据源读取数据。当然，Spark Streaming 支持多种不同的数据源，包括 kafkaStream、flumeStream、fileStream、networkStream 等。</p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JavaReceiverInputDStream&lt;String&gt; lines = ssc.socketTextStream(ip, port);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JavaReceiverInputDStream&lt;<span class="built_in">String</span>&gt; lines = ssc.socketTextStream(ip, port);</span><br></pre></td></tr></table></figure>
+
 <h2 id="3、操作-DStream"><a href="#3、操作-DStream" class="headerlink" title="3、操作 DStream"></a>3、操作 DStream</h2><blockquote>
 <p>对于从数据源得到的DStream，用户可以在其基础上进行各种操作，如 WordCount 的操作就是一个典型的单词计数执行流程，即对当前时间窗口内从数据源得到的数据进行分词，然后利用 MapReduce 算法映射和计算，最后使用 print() 输出结果。</p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">JavaDStream&lt;String&gt; words = lines.flatMap(s -&gt; Lists.newArrayList(SPACE.split(s)));</span><br><span class="line"> JavaPairDStream&lt;String, Integer&gt; wordCounts = words.mapToPair(w -&gt; <span class="keyword">new</span> Tuple2&lt;String, Integer&gt;(w, <span class="number">1</span>)).reduceByKey((a,b)-&gt;a+b);</span><br><span class="line"></span><br><span class="line"> wordCounts.foreachRDD((rdd,time) -&gt; &#123;</span><br><span class="line">    String counts = <span class="string">"Counts at time "</span> + time + <span class="string">" "</span> + rdd.collect();</span><br><span class="line">    System.out.println(counts);</span><br><span class="line">    System.out.println(<span class="string">"Appending to "</span> + outputFile.getAbsolutePath());</span><br><span class="line">    Files.append(counts + <span class="string">"\n"</span>, outputFile, Charset.defaultCharset());</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">JavaDStream&lt;<span class="built_in">String</span>&gt; words = lines.flatMap(s -&gt; Lists.newArrayList(SPACE.split(s)));</span><br><span class="line"> JavaPairDStream&lt;<span class="built_in">String</span>, Integer&gt; wordCounts = words.mapToPair(w -&gt; <span class="keyword">new</span> Tuple2&lt;<span class="built_in">String</span>, Integer&gt;(w, <span class="number">1</span>)).reduceByKey((a,b)-&gt;a+b);</span><br><span class="line"></span><br><span class="line"> wordCounts.foreachRDD((rdd,time) -&gt; &#123;</span><br><span class="line">    <span class="built_in">String</span> counts = <span class="string">"Counts at time "</span> + time + <span class="string">" "</span> + rdd.collect();</span><br><span class="line">    System.out.println(counts);</span><br><span class="line">    System.out.println(<span class="string">"Appending to "</span> + outputFile.getAbsolutePath());</span><br><span class="line">    Files.append(counts + <span class="string">"\n"</span>, outputFile, Charset.defaultCharset());</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
+
 <h2 id="4、启动-Spark-Streaming"><a href="#4、启动-Spark-Streaming" class="headerlink" title="4、启动 Spark Streaming"></a>4、启动 Spark Streaming</h2><blockquote>
 <p>之前的所有步骤只创建了执行流程，程序没有有真正连接上数据源，也没有对数据进行任何操作，只是设定好了所有的执行计算，当 ssc.start() 启动后，程序才真正进行所有预期的操作。</p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssc.start();</span><br><span class="line">ssc.awaitTermination();</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssc.start();</span><br><span class="line">ssc.awaitTermination();</span><br></pre></td></tr></table></figure>
 
 <h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol>
 <li>Spark Streaming 内部的实现和调度方式高度依赖 Spark 的 DAG 调度器和 RDD，这就决定了 Spark Streaming 的设计初衷必须是粗粒度方式的，同时，由于 Spark 内部调度器足够快速和高效，可以快速地处理小批量数据，这就获得准实时的特性。</li>
 <li>Spark Streaming 的粗粒度执行方式使其确保“处理且仅处理一次”的特性，同时也可以更方便地实现容错恢复机制。</li>
 <li>由于 Spark Streaming 的 DStream 本质是 RDD 在流式数据上的抽象，因此基于 RDD 的各种操作也有相应的基于 DStream 的版本，这样就大大降低了用户对于新框架的学习成本，在了解 Spark 的情况下用户将很容易使用 Spark Streaming。</li>
-<li>由于 DStream 是在 RDD 上的抽象，那么也就更容易与 RDD 进行交互操作，在需要将流式数据和批处理数据结合进行分析的情况下，将会变得非常方便。<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2></li>
+<li>由于 DStream 是在 RDD 上的抽象，那么也就更容易与 RDD 进行交互操作，在需要将流式数据和批处理数据结合进行分析的情况下，将会变得非常方便。</li>
+</ol>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><ol>
 <li>Spark Streaming 的粗粒度处理方式也造成了不可避免的延迟。在细粒度处理方式下，理想情况下每一条记录都会被实时处理，而在 Spark Streaming 中，数据需要汇总到一定的量后再一次性处理，这就增加了数据处理的延迟，这种延迟是由框架的设计引入的，并不是由网络或其他情况造成的。</li>
 <li>Spark Streaming 当前版本稳定性不是很好。<br>总而言之，Spark Streaming 为我们提供了一种崭新的流式处理框架，相信未来随着 Spark Streaming 会在易用性、稳定性以及其他方面有很大的提升。</li>
 </ol>
@@ -948,7 +1105,10 @@
 <h2 id="DStream操作"><a href="#DStream操作" class="headerlink" title="DStream操作"></a>DStream操作</h2><ul>
 <li>与RDD相同的操作方法</li>
 <li>transform：用于直接操作DStream内部的RDD，那些DStream没有提供的RDD操作，可以通过transform调用实现。如join：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val joinedDStream = d.transform(<span class="function"><span class="params">rdd</span> =&gt;</span> &#123;</span><br><span class="line">    rdd.join(rdd2)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h3 id="窗口操作"><a href="#窗口操作" class="headerlink" title="窗口操作"></a>窗口操作</h3></li>
+
+</li>
+</ul>
+<h3 id="窗口操作"><a href="#窗口操作" class="headerlink" title="窗口操作"></a>窗口操作</h3><ul>
 <li>窗口长度<blockquote>
 <p>窗口跨越的周期次数，每次窗口处理的数据分片数</p>
 </blockquote>
@@ -1302,10 +1462,12 @@
 <p>大部分都能隐式转换，Byte、Short需要显式指定</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val little : Byte = <span class="number">3</span></span><br><span class="line">val little:Short = <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>char、String支持\转义</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val a = <span class="string">'a'</span>    <span class="comment">//char = 'a'</span></span><br><span class="line">val str = <span class="string">"hello \101"</span>      <span class="comment">//String=hello A</span></span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>带小数点的默认为Double，以F结尾表示Float</p>
 </blockquote>
@@ -1317,6 +1479,7 @@
 <p>if表达式</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val filename = </span><br><span class="line"><span class="keyword">if</span> (!args.isEmpty) args(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">else</span> <span class="string">"default.txt"</span></span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>while循环</p>
 </blockquote>
@@ -1336,33 +1499,41 @@
 <p>try…catch</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def g() : Int = &#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="number">1</span>/<span class="number">0</span></span><br><span class="line">    &#125;<span class="keyword">catch</span>&#123;</span><br><span class="line">        <span class="keyword">case</span> ex: <span class="function"><span class="params">ArithmeticException</span> =&gt;</span> &#123;</span><br><span class="line">            ex.toString</span><br><span class="line">            <span class="number">2</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">case</span> _ :<span class="function"><span class="params">Throwable</span> =&gt;</span> <span class="number">3</span></span><br><span class="line">    &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">        println(<span class="string">"finally"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="基本数据结构"><a href="#基本数据结构" class="headerlink" title="基本数据结构"></a>基本数据结构</h2><blockquote>
 <p>数组Array：可修改，通过括号()来引用</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val greeting = <span class="keyword">new</span> <span class="built_in">Array</span>[<span class="built_in">String</span>](<span class="number">2</span>)</span><br><span class="line">greeting(<span class="number">0</span>) = <span class="string">"hello"</span></span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>列表List：只读</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">val numbers = List(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line">numbers(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>元组Tuple：只读，与List类似，可以是不同元素,下标从1开始</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val hostPort = (<span class="string">"localhost"</span>,<span class="number">80</span>)</span><br><span class="line">hostPort._1</span><br><span class="line">hostPort._2</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>集合Set：只读，没有重复的元素</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Set</span>(<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>映射Map:</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">val m = <span class="built_in">Map</span>(<span class="number">1</span> -&gt; <span class="string">"one"</span>,<span class="number">2</span> -&gt; <span class="string">"two"</span>)</span><br><span class="line">m(<span class="number">2</span>)</span><br><span class="line"><span class="comment">//创建可写版本</span></span><br><span class="line">val m = scala.collection.mutable.Map[Int,<span class="built_in">String</span>](<span class="number">1</span> -&gt; <span class="string">"one"</span>,<span class="number">2</span> -&gt; <span class="string">"two"</span>)</span><br><span class="line">m += (<span class="number">3</span> -&gt; <span class="string">"three"</span>)</span><br><span class="line">m(<span class="number">4</span>)=<span class="string">"four"</span></span><br><span class="line">m -= <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="定义class"><a href="#定义class" class="headerlink" title="定义class"></a>定义class</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Hello( _a : Int) &#123;</span><br><span class="line">    private val a = _a;</span><br><span class="line">    println(<span class="string">"initializing...("</span> + _a + “） ”);</span><br><span class="line">    def add( b : Int) : Int = a + b;</span><br><span class="line">    def <span class="keyword">this</span>() = <span class="keyword">this</span>(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
 <h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class Hello2(a : Int) extends Hello(a) &#123;</span><br><span class="line">    def add(b : Int, <span class="attr">c</span> : Int) : Int = a + b+ c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="单实例对象"><a href="#单实例对象" class="headerlink" title="单实例对象"></a>单实例对象</h2><blockquote>
 <p>scala 不支持static变量、成员，但提供了单例对象，用object来定义</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">object Timer &#123;</span><br><span class="line">    <span class="keyword">var</span> count = <span class="number">0</span>;</span><br><span class="line">    def currentCount() : Long = &#123;</span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">        count</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Timer.currentCount()</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>单例对象可以和类具有相同的名字，放在同一个源文件，可以相互访问彼此的private方法和变量。</p>
 </blockquote>
@@ -1370,6 +1541,7 @@
 
 
 <h2 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(x:Int) =&gt; x+<span class="number">1</span></span><br><span class="line"><span class="keyword">var</span> incr = <span class="function">(<span class="params">x:Int</span>) =&gt;</span> x+<span class="number">1</span></span><br><span class="line">incr(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
 <h2 id="匿名函数作为参数"><a href="#匿名函数作为参数" class="headerlink" title="匿名函数作为参数"></a>匿名函数作为参数</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">val someNumbers = List(<span class="number">1</span>,<span class="number">3</span>,<span class="number">-2</span>,<span class="number">0</span>)</span><br><span class="line">someNumbers.filter( <span class="function"><span class="params">x</span> =&gt;</span> x &gt; <span class="number">0</span> )</span><br><span class="line"><span class="comment">//如果匿名函数的参数只被使用一次，可以直接写函数体，用_代替一个参数</span></span><br><span class="line">someNumbers.filter(_ &gt; <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
 
 <h2 id="函数嵌套"><a href="#函数嵌套" class="headerlink" title="函数嵌套"></a>函数嵌套</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scala.io.Source</span><br><span class="line">def processFile(filename : <span class="built_in">String</span>)&#123;</span><br><span class="line">    def processLine(line : <span class="built_in">String</span>)&#123;</span><br><span class="line">        println(line)</span><br><span class="line">    &#125;</span><br><span class="line">    Source.fromFile(filename).getLines.foreach(processLine);</span><br><span class="line">&#125;</span><br><span class="line">processFile(<span class="string">"t.scala"</span>)</span><br></pre></td></tr></table></figure>
@@ -1389,6 +1561,7 @@
 <p>入口：单实例对象，内部必须有一个main方法，main有且仅有一个Array[String]的参数，并且返回Unit</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Hello.scala</span></span><br><span class="line">object Hello&#123;</span><br><span class="line">    def main(args : <span class="built_in">Array</span>[<span class="built_in">String</span>]) &#123;</span><br><span class="line">        <span class="keyword">for</span> (arg &lt;- args)</span><br><span class="line">            println(<span class="string">"hello "</span> + arg)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>运行：</p>
 </blockquote>
@@ -1478,7 +1651,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">文章</span>
               </a>
             </div>
@@ -1489,7 +1662,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1500,7 +1673,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

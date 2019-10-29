@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="running-in-sky">
 <meta property="og:description" content="spark-streaming的状态更新updateStateByKey、reduceByKeyAndWindow必须启用检查点功能，因为有状态的操作是从程序开始时一直进行的 DStream操作 与RDD相同的操作方法 transform：用于直接操作DStream内部的RDD，那些DStream没有提供的RDD操作，可以通过transform调用实现。如join：123val joinedDSt">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-29T17:23:28.079Z">
+<meta property="og:updated_time" content="2019-10-29T17:32:07.157Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -407,7 +407,10 @@
 <h2 id="DStream操作"><a href="#DStream操作" class="headerlink" title="DStream操作"></a>DStream操作</h2><ul>
 <li>与RDD相同的操作方法</li>
 <li>transform：用于直接操作DStream内部的RDD，那些DStream没有提供的RDD操作，可以通过transform调用实现。如join：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val joinedDStream = d.transform(<span class="function"><span class="params">rdd</span> =&gt;</span> &#123;</span><br><span class="line">    rdd.join(rdd2)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h3 id="窗口操作"><a href="#窗口操作" class="headerlink" title="窗口操作"></a>窗口操作</h3></li>
+
+</li>
+</ul>
+<h3 id="窗口操作"><a href="#窗口操作" class="headerlink" title="窗口操作"></a>窗口操作</h3><ul>
 <li>窗口长度<blockquote>
 <p>窗口跨越的周期次数，每次窗口处理的数据分片数</p>
 </blockquote>
@@ -608,7 +611,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">文章</span>
               </a>
             </div>
@@ -619,7 +622,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -630,7 +633,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
