@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.zzzhy.cn/2019/10/31/database-index-surfing/</loc>
+    
+    <lastmod>2019-10-30T17:12:06.064Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.zzzhy.cn/2019/10/30/scala-log-handle/</loc>
+    
+    <lastmod>2019-10-30T15:26:59.724Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.zzzhy.cn/2019/10/30/nginx-compile-opts/</loc>
+    
+    <lastmod>2019-10-30T15:26:41.734Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.zzzhy.cn/2019/10/30/spark-streaming-tuning/</loc>
     
     <lastmod>2019-10-29T18:00:55.745Z</lastmod>
@@ -19,20 +40,6 @@
     <loc>http://www.zzzhy.cn/2019/10/30/spark-streaming-indoor/</loc>
     
     <lastmod>2019-10-29T17:54:07.406Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.zzzhy.cn/2019/10/30/nginx-compile-opts/</loc>
-    
-    <lastmod>2019-10-29T17:40:48.750Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.zzzhy.cn/2019/10/30/scala-log-handle/</loc>
-    
-    <lastmod>2019-10-29T17:36:01.609Z</lastmod>
     
   </url>
   
