@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://www.zzzhy.cn/"/>
   <updated>2019-10-29T17:40:48.750Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://www.zzzhy.cn/</id>
   
   <author>
     <name>zzzhy</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>nginx编译参数</title>
-    <link href="http://yoursite.com/2019/10/30/nginx-compile-opts/"/>
-    <id>http://yoursite.com/2019/10/30/nginx-compile-opts/</id>
+    <link href="http://www.zzzhy.cn/2019/10/30/nginx-compile-opts/"/>
+    <id>http://www.zzzhy.cn/2019/10/30/nginx-compile-opts/</id>
     <published>2019-10-29T17:39:52.000Z</published>
     <updated>2019-10-29T17:40:48.750Z</updated>
     
@@ -35,17 +35,17 @@
     </summary>
     
     
-      <category term="nginx" scheme="http://yoursite.com/categories/nginx/"/>
+      <category term="nginx" scheme="http://www.zzzhy.cn/categories/nginx/"/>
     
     
-      <category term="nginx" scheme="http://yoursite.com/tags/nginx/"/>
+      <category term="nginx" scheme="http://www.zzzhy.cn/tags/nginx/"/>
     
   </entry>
   
   <entry>
     <title>sql tuning</title>
-    <link href="http://yoursite.com/2019/10/30/sql-tuning/"/>
-    <id>http://yoursite.com/2019/10/30/sql-tuning/</id>
+    <link href="http://www.zzzhy.cn/2019/10/30/sql-tuning/"/>
+    <id>http://www.zzzhy.cn/2019/10/30/sql-tuning/</id>
     <published>2019-10-29T17:20:51.000Z</published>
     <updated>2019-10-29T17:54:22.101Z</updated>
     
@@ -63,19 +63,19 @@
     </summary>
     
     
-      <category term="sql" scheme="http://yoursite.com/categories/sql/"/>
+      <category term="sql" scheme="http://www.zzzhy.cn/categories/sql/"/>
     
     
-      <category term="tuning" scheme="http://yoursite.com/tags/tuning/"/>
+      <category term="tuning" scheme="http://www.zzzhy.cn/tags/tuning/"/>
     
-      <category term="sql" scheme="http://yoursite.com/tags/sql/"/>
+      <category term="sql" scheme="http://www.zzzhy.cn/tags/sql/"/>
     
   </entry>
   
   <entry>
     <title>akka best practice</title>
-    <link href="http://yoursite.com/2019/10/30/akka-best-practice/"/>
-    <id>http://yoursite.com/2019/10/30/akka-best-practice/</id>
+    <link href="http://www.zzzhy.cn/2019/10/30/akka-best-practice/"/>
+    <id>http://www.zzzhy.cn/2019/10/30/akka-best-practice/</id>
     <published>2019-10-29T17:12:36.000Z</published>
     <updated>2019-10-29T17:22:33.403Z</updated>
     
@@ -95,21 +95,21 @@
     </summary>
     
     
-      <category term="akka" scheme="http://yoursite.com/categories/akka/"/>
+      <category term="akka" scheme="http://www.zzzhy.cn/categories/akka/"/>
     
     
-      <category term="akka" scheme="http://yoursite.com/tags/akka/"/>
+      <category term="akka" scheme="http://www.zzzhy.cn/tags/akka/"/>
     
-      <category term="actor" scheme="http://yoursite.com/tags/actor/"/>
+      <category term="actor" scheme="http://www.zzzhy.cn/tags/actor/"/>
     
-      <category term="tuning" scheme="http://yoursite.com/tags/tuning/"/>
+      <category term="tuning" scheme="http://www.zzzhy.cn/tags/tuning/"/>
     
   </entry>
   
   <entry>
     <title>spark streaming入门</title>
-    <link href="http://yoursite.com/2019/10/30/spark-streaming-indoor/"/>
-    <id>http://yoursite.com/2019/10/30/spark-streaming-indoor/</id>
+    <link href="http://www.zzzhy.cn/2019/10/30/spark-streaming-indoor/"/>
+    <id>http://www.zzzhy.cn/2019/10/30/spark-streaming-indoor/</id>
     <published>2019-10-29T16:31:45.000Z</published>
     <updated>2019-10-29T17:54:07.406Z</updated>
     
@@ -125,21 +125,21 @@
     </summary>
     
     
-      <category term="spark" scheme="http://yoursite.com/categories/spark/"/>
+      <category term="spark" scheme="http://www.zzzhy.cn/categories/spark/"/>
     
     
-      <category term="scala" scheme="http://yoursite.com/tags/scala/"/>
+      <category term="scala" scheme="http://www.zzzhy.cn/tags/scala/"/>
     
-      <category term="spark" scheme="http://yoursite.com/tags/spark/"/>
+      <category term="spark" scheme="http://www.zzzhy.cn/tags/spark/"/>
     
-      <category term="spark streaming" scheme="http://yoursite.com/tags/spark-streaming/"/>
+      <category term="spark streaming" scheme="http://www.zzzhy.cn/tags/spark-streaming/"/>
     
   </entry>
   
   <entry>
     <title>spark streaming 基础与调优</title>
-    <link href="http://yoursite.com/2019/10/30/spark-streaming-tuning/"/>
-    <id>http://yoursite.com/2019/10/30/spark-streaming-tuning/</id>
+    <link href="http://www.zzzhy.cn/2019/10/30/spark-streaming-tuning/"/>
+    <id>http://www.zzzhy.cn/2019/10/30/spark-streaming-tuning/</id>
     <published>2019-10-29T16:27:23.000Z</published>
     <updated>2019-10-29T18:00:55.745Z</updated>
     
@@ -155,23 +155,23 @@
     </summary>
     
     
-      <category term="spark" scheme="http://yoursite.com/categories/spark/"/>
+      <category term="spark" scheme="http://www.zzzhy.cn/categories/spark/"/>
     
     
-      <category term="tuning" scheme="http://yoursite.com/tags/tuning/"/>
+      <category term="tuning" scheme="http://www.zzzhy.cn/tags/tuning/"/>
     
-      <category term="scala" scheme="http://yoursite.com/tags/scala/"/>
+      <category term="scala" scheme="http://www.zzzhy.cn/tags/scala/"/>
     
-      <category term="spark" scheme="http://yoursite.com/tags/spark/"/>
+      <category term="spark" scheme="http://www.zzzhy.cn/tags/spark/"/>
     
-      <category term="spark streaming" scheme="http://yoursite.com/tags/spark-streaming/"/>
+      <category term="spark streaming" scheme="http://www.zzzhy.cn/tags/spark-streaming/"/>
     
   </entry>
   
   <entry>
     <title>scala 日志处理实例</title>
-    <link href="http://yoursite.com/2019/10/30/scala-log-handle/"/>
-    <id>http://yoursite.com/2019/10/30/scala-log-handle/</id>
+    <link href="http://www.zzzhy.cn/2019/10/30/scala-log-handle/"/>
+    <id>http://www.zzzhy.cn/2019/10/30/scala-log-handle/</id>
     <published>2019-10-29T16:24:31.000Z</published>
     <updated>2019-10-29T17:36:01.609Z</updated>
     
@@ -187,21 +187,21 @@
     </summary>
     
     
-      <category term="scala" scheme="http://yoursite.com/categories/scala/"/>
+      <category term="scala" scheme="http://www.zzzhy.cn/categories/scala/"/>
     
     
-      <category term="scala" scheme="http://yoursite.com/tags/scala/"/>
+      <category term="scala" scheme="http://www.zzzhy.cn/tags/scala/"/>
     
-      <category term="spark" scheme="http://yoursite.com/tags/spark/"/>
+      <category term="spark" scheme="http://www.zzzhy.cn/tags/spark/"/>
     
-      <category term="functional programming" scheme="http://yoursite.com/tags/functional-programming/"/>
+      <category term="functional programming" scheme="http://www.zzzhy.cn/tags/functional-programming/"/>
     
   </entry>
   
   <entry>
     <title>scala 学习入门</title>
-    <link href="http://yoursite.com/2019/10/30/scala-learning/"/>
-    <id>http://yoursite.com/2019/10/30/scala-learning/</id>
+    <link href="http://www.zzzhy.cn/2019/10/30/scala-learning/"/>
+    <id>http://www.zzzhy.cn/2019/10/30/scala-learning/</id>
     <published>2019-10-29T16:04:17.000Z</published>
     <updated>2019-10-29T17:35:45.036Z</updated>
     
@@ -220,10 +220,10 @@
     </summary>
     
     
-      <category term="scala" scheme="http://yoursite.com/categories/scala/"/>
+      <category term="scala" scheme="http://www.zzzhy.cn/categories/scala/"/>
     
     
-      <category term="scala" scheme="http://yoursite.com/tags/scala/"/>
+      <category term="scala" scheme="http://www.zzzhy.cn/tags/scala/"/>
     
   </entry>
   
