@@ -100,17 +100,17 @@
 
 
 
-<meta name="description" content="索引生成 索引与索引直接并无直接关联，他们是相互独立的。  聚集索引  ​         当我们给一个数据库表分配一个主键时，这时就会生成一棵平衡树结构。这个即该表的索引树。也就是说，数据库表生来就是一颗带有数据的索引树，数据均存储在叶子节点。多达10+的分叉树结构，把大数据量搜索所需的查询次数指数级的减少，极大地降低了io消耗，从而提高性能。   非聚集索引 ​      当我们给数据库表增加">
+<meta name="description" content="索引生成 索引与索引直接并无直接关联，他们是相互独立的。  聚集索引  ​         当我们给一个数据库表分配一个主键时，这时就会生成一棵平衡树结构。这个即该表的索引树。也就是说，数据库表生来就是一颗带有数据的索引树，数据均存储在叶子节点。多达10+的分叉树结构，把大数据量搜索所需的查询次数指数级的减少，极大地降低了io消耗，从而提高性能。     非聚集索引 ​      当我们给数据库表">
 <meta name="keywords" content="database,sql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库索引漫谈">
 <meta property="og:url" content="http:&#x2F;&#x2F;www.zzzhy.cn&#x2F;2019&#x2F;10&#x2F;31&#x2F;database-index-surfing&#x2F;index.html">
 <meta property="og:site_name" content="running-in-sky">
-<meta property="og:description" content="索引生成 索引与索引直接并无直接关联，他们是相互独立的。  聚集索引  ​         当我们给一个数据库表分配一个主键时，这时就会生成一棵平衡树结构。这个即该表的索引树。也就是说，数据库表生来就是一颗带有数据的索引树，数据均存储在叶子节点。多达10+的分叉树结构，把大数据量搜索所需的查询次数指数级的减少，极大地降低了io消耗，从而提高性能。   非聚集索引 ​      当我们给数据库表增加">
+<meta property="og:description" content="索引生成 索引与索引直接并无直接关联，他们是相互独立的。  聚集索引  ​         当我们给一个数据库表分配一个主键时，这时就会生成一棵平衡树结构。这个即该表的索引树。也就是说，数据库表生来就是一颗带有数据的索引树，数据均存储在叶子节点。多达10+的分叉树结构，把大数据量搜索所需的查询次数指数级的减少，极大地降低了io消耗，从而提高性能。     非聚集索引 ​      当我们给数据库表">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https:&#x2F;&#x2F;pic2.zhimg.com&#x2F;50&#x2F;v2-ccc619303bf1ade411ea903f5e392941_hd.jpg">
 <meta property="og:image" content="https:&#x2F;&#x2F;pic1.zhimg.com&#x2F;v2-ef9b5d5d6407d80b937ca19d6be9dadc_b.jpg">
-<meta property="og:updated_time" content="2019-10-30T17:12:06.064Z">
+<meta property="og:updated_time" content="2019-11-01T16:37:17.718Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;pic2.zhimg.com&#x2F;50&#x2F;v2-ccc619303bf1ade411ea903f5e392941_hd.jpg">
 
@@ -437,9 +437,10 @@
         <p>索引生成</p>
 <p>索引与索引直接并无直接关联，他们是相互独立的。</p>
 <ol>
-<li>聚集索引</li>
+<li><p>聚集索引</p>
+<p> ​         当我们给一个数据库表分配一个主键时，这时就会生成一棵平衡树结构。这个即该表的索引树。也就是说，数据库表生来就是一颗带有数据的索引树，数据均存储在叶子节点。多达10+的分叉树结构，把大数据量搜索所需的查询次数指数级的减少，极大地降低了io消耗，从而提高性能。</p>
+</li>
 </ol>
-<p>​         当我们给一个数据库表分配一个主键时，这时就会生成一棵平衡树结构。这个即该表的索引树。也就是说，数据库表生来就是一颗带有数据的索引树，数据均存储在叶子节点。多达10+的分叉树结构，把大数据量搜索所需的查询次数指数级的减少，极大地降低了io消耗，从而提高性能。</p>
 <p><img src="https://pic2.zhimg.com/50/v2-ccc619303bf1ade411ea903f5e392941_hd.jpg" alt="“sql 聚集索引树”的图片搜索结果&quot;"></p>
 <ol start="2">
 <li><p>非聚集索引</p>

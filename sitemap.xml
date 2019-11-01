@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.zzzhy.cn/about/index.html</loc>
+    
+    <lastmod>2019-11-01T16:39:15.018Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.zzzhy.cn/2019/10/31/database-index-surfing/</loc>
     
-    <lastmod>2019-10-30T17:12:06.064Z</lastmod>
+    <lastmod>2019-11-01T16:37:17.718Z</lastmod>
     
   </url>
   
@@ -82,13 +89,6 @@
     <loc>http://www.zzzhy.cn/tags/index.html</loc>
     
     <lastmod>2019-10-29T12:20:13.760Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.zzzhy.cn/about/index.html</loc>
-    
-    <lastmod>2019-10-29T11:39:38.848Z</lastmod>
     
   </url>
   
