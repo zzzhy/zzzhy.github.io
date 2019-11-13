@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>理解kubernetes架构</title>
+    <url>/2019/11/13/k8s-arch/</url>
+    <content><![CDATA[<h2 id="理解kubernetes"><a href="#理解kubernetes" class="headerlink" title="理解kubernetes"></a>理解kubernetes</h2><h3 id="kubernetes集群架构"><a href="#kubernetes集群架构" class="headerlink" title="kubernetes集群架构"></a>kubernetes集群架构</h3><img src="/uploads/k8s-arch.png" alt="image-20191113230229077" style="zoom:50%;" />
+
+<h4 id="控制面板"><a href="#控制面板" class="headerlink" title="控制面板"></a>控制面板</h4><p>包含多个组件，组件分别部署在多个主节点保证高可用：</p>
+<ul>
+<li>Kubernetes API服务器</li>
+<li>Scheduler</li>
+<li>Controller Manager 执行集群级别的任务，如复制组件、持续跟踪工作节点、处理节点失败等</li>
+<li>etcd 持久化存储集群配置</li>
+</ul>
+<h4 id="工作节点"><a href="#工作节点" class="headerlink" title="工作节点"></a>工作节点</h4><p>运行容器化应用的机器，也包含多个组件：</p>
+<ul>
+<li>Docker、rtk或其他的容器类型</li>
+<li>Kubelet，他与API服务器通信，管理他所在节点的容器</li>
+<li>Kubernetes Service Proxy（kube-proxy）负责组件之间的负载均衡网络流量</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数据库索引漫谈</title>
     <url>/2019/10/31/database-index-surfing/</url>
     <content><![CDATA[<p>索引生成</p>
@@ -33,8 +56,8 @@
         <category>database</category>
       </categories>
       <tags>
-        <tag>database</tag>
         <tag>sql</tag>
+        <tag>database</tag>
       </tags>
   </entry>
   <entry>

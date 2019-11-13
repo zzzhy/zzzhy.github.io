@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zzzhy.cn/"/>
-  <updated>2019-11-01T17:02:52.528Z</updated>
+  <updated>2019-11-13T15:15:23.215Z</updated>
   <id>http://www.zzzhy.cn/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>理解kubernetes架构</title>
+    <link href="http://www.zzzhy.cn/2019/11/13/k8s-arch/"/>
+    <id>http://www.zzzhy.cn/2019/11/13/k8s-arch/</id>
+    <published>2019-11-13T15:12:00.000Z</published>
+    <updated>2019-11-13T15:15:23.215Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="理解kubernetes"><a href="#理解kubernetes" class="headerlink" title="理解kubernetes"></a>理解kubernetes</h2><h3 id="kubernetes集群架构"><a href="#kubernetes集群架构" class="headerlink" title="kubernetes集群架构"></a>kubernetes集群架构</h3><img src="/uploads/k8s-arch.png" alt="image-20191113230229077" style="zoom:50%;" /><h4 id="控制面板"><a href="#控制面板" class="headerlink" title="控制面板"></a>控制面板</h4><p>包含多个组件，组件分别部署在多个主节点保证高可用：</p><ul><li>Kubernetes API服务器</li><li>Scheduler</li><li>Controller Manager 执行集群级别的任务，如复制组件、持续跟踪工作节点、处理节点失败等</li><li>etcd 持久化存储集群配置</li></ul><h4 id="工作节点"><a href="#工作节点" class="headerlink" title="工作节点"></a>工作节点</h4><p>运行容器化应用的机器，也包含多个组件：</p><ul><li>Docker、rtk或其他的容器类型</li><li>Kubelet，他与API服务器通信，管理他所在节点的容器</li><li>Kubernetes Service Proxy（kube-proxy）负责组件之间的负载均衡网络流量</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;理解kubernetes&quot;&gt;&lt;a href=&quot;#理解kubernetes&quot; class=&quot;headerlink&quot; title=&quot;理解kubernetes&quot;&gt;&lt;/a&gt;理解kubernetes&lt;/h2&gt;&lt;h3 id=&quot;kubernetes集群架构&quot;&gt;&lt;a href=&quot;
+      
+    
+    </summary>
+    
+    
+    
+      <category term="kubernetes" scheme="http://www.zzzhy.cn/tags/kubernetes/"/>
+    
+  </entry>
   
   <entry>
     <title>数据库索引漫谈</title>
@@ -42,9 +66,9 @@
       <category term="database" scheme="http://www.zzzhy.cn/categories/database/"/>
     
     
-      <category term="database" scheme="http://www.zzzhy.cn/tags/database/"/>
-    
       <category term="sql" scheme="http://www.zzzhy.cn/tags/sql/"/>
+    
+      <category term="database" scheme="http://www.zzzhy.cn/tags/database/"/>
     
   </entry>
   
