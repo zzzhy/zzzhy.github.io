@@ -82,7 +82,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="akka,actor,tuning," />
+  <meta name="keywords" content="akka" />
 
 
 
@@ -101,14 +101,14 @@
 
 
 <meta name="description" content="使用tell而非ask，ExtraActor模式 使用dispatcher隔离耗时阻塞任务，区分不同的任务类别使用不同线程数量的线程池 一般来说ForkJoinPool的效率最高 使用router来进行多核编程，BalancePool适用于本地，所有actor共用一个邮箱 包含状态的可以使用become&#x2F;unbecome来进行编程，使状态清晰，代码逻辑结构简单">
-<meta name="keywords" content="akka,actor,tuning">
+<meta name="keywords" content="akka">
 <meta property="og:type" content="article">
 <meta property="og:title" content="akka best practice">
 <meta property="og:url" content="http:&#x2F;&#x2F;www.zzzhy.cn&#x2F;2019&#x2F;10&#x2F;30&#x2F;akka-best-practice&#x2F;index.html">
 <meta property="og:site_name" content="running-in-sky">
 <meta property="og:description" content="使用tell而非ask，ExtraActor模式 使用dispatcher隔离耗时阻塞任务，区分不同的任务类别使用不同线程数量的线程池 一般来说ForkJoinPool的效率最高 使用router来进行多核编程，BalancePool适用于本地，所有actor共用一个邮箱 包含状态的可以使用become&#x2F;unbecome来进行编程，使状态清晰，代码逻辑结构简单">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-29T17:22:33.403Z">
+<meta property="og:updated_time" content="2019-11-14T16:28:41.979Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -307,6 +307,11 @@
 </nav>
 
 <script data-ad-client="ca-pub-7097230958984885" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<% if (page.keywords){ %>
+<meta name="keywords" content="<%= page.keywords %>,<%= config.keywords %>">
+<% } else if (config.keywords){ %>
+<meta name="keywords" content="<%= config.keywords %>">
+<%} %>
 
  </div>
     </header>

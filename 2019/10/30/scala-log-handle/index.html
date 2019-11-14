@@ -82,7 +82,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="scala,spark,functional programming," />
+  <meta name="keywords" content="scala,spark,日志处理" />
 
 
 
@@ -101,14 +101,14 @@
 
 
 <meta name="description" content="日志格式   100.97.15.241 - - [19&#x2F;Aug&#x2F;2016:11:05:47 +0800] “GET &#x2F;view.php HTTP&#x2F;1.0” 200 0 “http:&#x2F;&#x2F;www.gooogle.cn&#x2F;search?q=hadoop&amp;quot; “Mozilla&#x2F;5.0 (compatible;MSIE 10.0;Windows NT 6.2; Trident&#x2F;6.0” “-“">
-<meta name="keywords" content="scala,spark,functional programming">
+<meta name="keywords" content="scala,spark,日志处理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="scala 日志处理实例">
 <meta property="og:url" content="http:&#x2F;&#x2F;www.zzzhy.cn&#x2F;2019&#x2F;10&#x2F;30&#x2F;scala-log-handle&#x2F;index.html">
 <meta property="og:site_name" content="running-in-sky">
 <meta property="og:description" content="日志格式   100.97.15.241 - - [19&#x2F;Aug&#x2F;2016:11:05:47 +0800] “GET &#x2F;view.php HTTP&#x2F;1.0” 200 0 “http:&#x2F;&#x2F;www.gooogle.cn&#x2F;search?q=hadoop&amp;quot; “Mozilla&#x2F;5.0 (compatible;MSIE 10.0;Windows NT 6.2; Trident&#x2F;6.0” “-“">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-30T15:26:59.724Z">
+<meta property="og:updated_time" content="2019-11-14T16:30:50.269Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -307,6 +307,11 @@
 </nav>
 
 <script data-ad-client="ca-pub-7097230958984885" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<% if (page.keywords){ %>
+<meta name="keywords" content="<%= page.keywords %>,<%= config.keywords %>">
+<% } else if (config.keywords){ %>
+<meta name="keywords" content="<%= config.keywords %>">
+<%} %>
 
  </div>
     </header>

@@ -101,7 +101,7 @@
 
 
 <meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;曾海云，java小学生，微服务与服务治理操盘手，云原生平台体验师，兼爱OO与FP，致力于将主流领域驱动设计与函数式编程、以及微服务架构完美结合。">
-<meta name="keywords" content="曾海云,zzzhy">
+<meta name="keywords" content="曾海云,zzzhy,cloud native,kubernetes,spark,scala,istio">
 <meta property="og:type" content="website">
 <meta property="og:title" content="about">
 <meta property="og:url" content="http:&#x2F;&#x2F;www.zzzhy.cn&#x2F;about&#x2F;index.html">
@@ -307,6 +307,11 @@
 </nav>
 
 <script data-ad-client="ca-pub-7097230958984885" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<% if (page.keywords){ %>
+<meta name="keywords" content="<%= page.keywords %>,<%= config.keywords %>">
+<% } else if (config.keywords){ %>
+<meta name="keywords" content="<%= config.keywords %>">
+<%} %>
 
  </div>
     </header>

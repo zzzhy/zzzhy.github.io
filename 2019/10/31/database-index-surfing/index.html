@@ -82,7 +82,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="database,sql," />
+  <meta name="keywords" content="database,sql,index" />
 
 
 
@@ -101,7 +101,7 @@
 
 
 <meta name="description" content="索引生成 索引与索引直接并无直接关联，他们是相互独立的。  聚集索引  当我们给一个数据库表分配一个主键时，这时就会生成一棵平衡树结构。这个即该表的索引树。也就是说，数据库表生来就是一颗带有数据的索引树，数据均存储在叶子节点。多达10+的分叉树结构，把大数据量搜索所需的查询次数指数级的减少，极大地降低了io消耗，从而提高性能。     非聚集索引  当我们给数据库表增加普通索引、唯一索引时，这时数">
-<meta name="keywords" content="database,sql">
+<meta name="keywords" content="database,sql,index">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库索引漫谈">
 <meta property="og:url" content="http:&#x2F;&#x2F;www.zzzhy.cn&#x2F;2019&#x2F;10&#x2F;31&#x2F;database-index-surfing&#x2F;index.html">
@@ -110,7 +110,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https:&#x2F;&#x2F;pic2.zhimg.com&#x2F;50&#x2F;v2-ccc619303bf1ade411ea903f5e392941_hd.jpg">
 <meta property="og:image" content="https:&#x2F;&#x2F;pic1.zhimg.com&#x2F;v2-ef9b5d5d6407d80b937ca19d6be9dadc_b.jpg">
-<meta property="og:updated_time" content="2019-11-01T17:02:52.528Z">
+<meta property="og:updated_time" content="2019-11-14T16:29:21.130Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;pic2.zhimg.com&#x2F;50&#x2F;v2-ccc619303bf1ade411ea903f5e392941_hd.jpg">
 
@@ -310,6 +310,11 @@
 </nav>
 
 <script data-ad-client="ca-pub-7097230958984885" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<% if (page.keywords){ %>
+<meta name="keywords" content="<%= page.keywords %>,<%= config.keywords %>">
+<% } else if (config.keywords){ %>
+<meta name="keywords" content="<%= config.keywords %>">
+<%} %>
 
  </div>
     </header>

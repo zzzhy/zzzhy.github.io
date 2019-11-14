@@ -103,7 +103,7 @@
 
 
 <meta name="description" content="404                                                                                                                                                             true">
-<meta name="keywords" content="曾海云,zzzhy">
+<meta name="keywords" content="曾海云,zzzhy,cloud native,kubernetes,spark,scala,istio">
 <meta property="og:type" content="website">
 <meta property="og:title" content="404 Not Found：该页无法显示">
 <meta property="og:url" content="http:&#x2F;&#x2F;www.zzzhy.cn&#x2F;404&#x2F;index.html">
@@ -309,6 +309,11 @@
 </nav>
 
 <script data-ad-client="ca-pub-7097230958984885" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<% if (page.keywords){ %>
+<meta name="keywords" content="<%= page.keywords %>,<%= config.keywords %>">
+<% } else if (config.keywords){ %>
+<meta name="keywords" content="<%= config.keywords %>">
+<%} %>
 
  </div>
     </header>
