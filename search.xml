@@ -131,11 +131,25 @@
 </li>
 <li><p>创建Ingress资源</p>
 <p>每个LoadBalancer都需要自己的负载均衡器以及独有的公有的IP地址，而Ingress只需要一个公网IP就能为许多服务提供访问。还可以提供基于Cookie的会话亲和性（session affinity）。</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubia</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  rules:</span></span><br><span class="line"><span class="attr">  - host:</span> <span class="string">kubia.example.com</span>  			<span class="comment">#将域名映射到服务</span></span><br><span class="line"><span class="attr">    http:</span></span><br><span class="line"><span class="attr">      paths:</span></span><br><span class="line"><span class="attr">      - path:</span> <span class="string">/</span></span><br><span class="line"><span class="attr">        backend:</span></span><br><span class="line"><span class="attr">          serviceName:</span> <span class="string">kubia-nodepoint</span>		<span class="comment">#将所有请求发给nodeport服务的80端口</span></span><br><span class="line"><span class="attr">          servicePort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Ingress</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">kubia</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  rules:</span></span><br><span class="line"><span class="attr">  - host:</span> <span class="string">kubia.example.com</span>  			<span class="comment">#将域名映射到服务</span></span><br><span class="line"><span class="attr">    http:</span></span><br><span class="line"><span class="attr">      paths:</span></span><br><span class="line"><span class="attr">      - path:</span> <span class="string">/</span></span><br><span class="line"><span class="attr">        backend:</span></span><br><span class="line"><span class="attr">          serviceName:</span> <span class="string">kubia-nodeport</span>		<span class="comment">#将所有请求发给nodeport服务的80端口</span></span><br><span class="line"><span class="attr">          servicePort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
 
-
+<p>测试：</p>
+<ol>
+<li><p>启动nodeport和rs</p>
+</li>
+<li><p>解析hosts</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">"<span class="variable">$(minikube ip)</span> kubia.example.com"</span> | sudo tee -a /etc/hosts</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>访问<a href="http://kubia.example.com" target="_blank" rel="noopener">http://kubia.example.com</a></p>
+</li>
+</ol>
 </li>
 </ul>
+<p>​       minikube必备：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 开启ingress</span></span><br><span class="line">➜  minikube addons <span class="built_in">enable</span> ingress</span><br><span class="line"><span class="comment"># 执行完后看下是否下载镜像成功,下面下载失败了</span></span><br><span class="line">➜  k8s-in-action kubectl get pods -n kube-system</span><br><span class="line">NAME                                        READY   STATUS             RESTARTS   AGE</span><br><span class="line">coredns-67c766df46-6sxxr                    1/1     Running            1          12h</span><br><span class="line">coredns-67c766df46-jrmbn                    1/1     Running            1          12h</span><br><span class="line">etcd-minikube                               1/1     Running            1          12h</span><br><span class="line">kube-addon-manager-minikube                 1/1     Running            1          12h</span><br><span class="line">kube-apiserver-minikube                     1/1     Running            1          12h</span><br><span class="line">kube-controller-manager-minikube            1/1     Running            1          12h</span><br><span class="line">kube-proxy-9bxng                            1/1     Running            1          12h</span><br><span class="line">kube-scheduler-minikube                     1/1     Running            1          12h</span><br><span class="line">nginx-ingress-controller-6fc5bcc8c9-sxf25   0/1     ImagePullBackOff   0          8m45s</span><br><span class="line">storage-provisioner                         1/1     Running            1          12h</span><br></pre></td></tr></table></figure>
+
+
+
 ]]></content>
       <categories>
         <category>cloud native</category>
