@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>service-mesh-op-with-istio</title>
+    <title>istio服务治理op</title>
     <url>/2019/12/04/service-mesh-op-with-istio/</url>
     <content><![CDATA[<h3 id="服务治理的三种发展形态"><a href="#服务治理的三种发展形态" class="headerlink" title="服务治理的三种发展形态"></a>服务治理的三种发展形态</h3><ul>
 <li>应用程序中包含治理逻辑</li>
@@ -59,7 +59,8 @@
         <category>cloud native</category>
       </categories>
       <tags>
-        <tag>cloud native,istio,k8s</tag>
+        <tag>kubernetes</tag>
+        <tag>istio</tag>
       </tags>
   </entry>
   <entry>

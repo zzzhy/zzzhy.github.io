@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zzzhy.cn/"/>
-  <updated>2019-12-04T14:39:40.855Z</updated>
+  <updated>2019-12-04T14:48:00.067Z</updated>
   <id>http://www.zzzhy.cn/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>service-mesh-op-with-istio</title>
+    <title>istio服务治理op</title>
     <link href="http://www.zzzhy.cn/2019/12/04/service-mesh-op-with-istio/"/>
     <id>http://www.zzzhy.cn/2019/12/04/service-mesh-op-with-istio/</id>
     <published>2019-12-04T14:37:08.000Z</published>
-    <updated>2019-12-04T14:39:40.855Z</updated>
+    <updated>2019-12-04T14:48:00.067Z</updated>
     
     <content type="html"><![CDATA[<h3 id="服务治理的三种发展形态"><a href="#服务治理的三种发展形态" class="headerlink" title="服务治理的三种发展形态"></a>服务治理的三种发展形态</h3><ul><li>应用程序中包含治理逻辑</li><li>治理逻辑独立的代码（SDK模式）</li><li>治理逻辑独立的进程（SIDECAR模式）</li></ul><h3 id="spring-cloud-k8s-与-istio-k8s的比较"><a href="#spring-cloud-k8s-与-istio-k8s的比较" class="headerlink" title="spring cloud + k8s 与 istio + k8s的比较"></a>spring cloud + k8s 与 istio + k8s的比较</h3><table><thead><tr><th>项目</th><th>istio + k8s</th><th>spring cloud + k8s</th></tr></thead><tbody><tr><td>架构设计</td><td>基于Kubernetes能力构建</td><td>和Kubernetes无结合</td></tr><tr><td>服务发现</td><td>使用k8s服务名，和k8s一致的服务发现机制</td><td>两套服务发现。有服务发现数据不一致的问题。k8s中pod的正常歉意会引起重新进行服务注册</td></tr><tr><td>使用体验</td><td>完全的k8s使用体验。sidecar自动注入pod，业务无感知，和部署普通k8s服务无差别。</td><td>和k8s无结合，k8s只是提供了运行环境</td></tr><tr><td>控制面</td><td>无序额外的APIServer和规则策略定义。基于k8s CRD进行扩展。</td><td>需自行安装和维护控制面来管理治理规则。</td></tr></tbody></table><h3 id="istio的几个约束"><a href="#istio的几个约束" class="headerlink" title="istio的几个约束"></a>istio的几个约束</h3><ul><li><p>端口命名：</p><p>服务端口必须进行命名，而且名称只能是protocol[-<suffix>]形式，protocol可以使tcp、http、http2、https、mysql、redis等。istio根据端口定义的协议提供对应的路由能力。如果端口未命名或没有基于这种格式，则端口的流量会当成tcp流量来处理。</p></li><li><p>服务关联</p><p>如果一个pod属于多个k8s服务，则要求服务不能再同一个端口使用不同的协议。</p></li><li><p>Deployment使用app和version标签：</p><p>每个deployment都需要一个有业务意义的app标签和一个表示版本的version标签。分布式追踪可以通过app标签补齐上下文信息，还可以通过app和version为遥测数据补齐上下文信息。</p></li></ul><h3 id="openshift-deploy组件的注入问题"><a href="#openshift-deploy组件的注入问题" class="headerlink" title="openshift deploy组件的注入问题"></a>openshift deploy组件的注入问题</h3><p>当开启了namespace的自动注入，又是在用openshift的deploy进行服务部署时，会发生deploy组件complete之后istio-proxy容器不会停止。这时，我们可以修改下istio-inject的ConfigMap配置：</p><p>当检测到</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">neverInjectSelector:</span></span><br><span class="line"><span class="attr">  - matchExpressions:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">&#123;key:</span> <span class="string">openshift.io/build.name,</span> <span class="attr">operator:</span> <span class="string">Exists&#125;</span></span><br><span class="line"><span class="attr">  - matchExpressions:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">&#123;key:</span> <span class="string">openshift.io/deployer-pod-for.name,</span> <span class="attr">operator:</span> <span class="string">Exists&#125;</span></span><br></pre></td></tr></table></figure>]]></content>
     
@@ -40,7 +40,9 @@
       <category term="cloud native" scheme="http://www.zzzhy.cn/categories/cloud-native/"/>
     
     
-      <category term="cloud native,istio,k8s" scheme="http://www.zzzhy.cn/tags/cloud-native-istio-k8s/"/>
+      <category term="kubernetes" scheme="http://www.zzzhy.cn/tags/kubernetes/"/>
+    
+      <category term="istio" scheme="http://www.zzzhy.cn/tags/istio/"/>
     
   </entry>
   
