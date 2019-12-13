@@ -3,8 +3,7 @@
   <entry>
     <title>istio在calico环境的安装</title>
     <url>/2019/12/13/istio-on-calico/</url>
-    <content><![CDATA[<p>[TOC]</p>
-<p><img src="/uploads/istio2.png" alt="istio2"></p>
+    <content><![CDATA[<p><img src="/uploads/istio2.png" alt="istio2"></p>
 <blockquote>
 <p>flannel和ovs环境下的istio安装比较简单，flannel直接按照官网安装就行了,ovs的话需要把istoi-system的netid设置为0</p>
 </blockquote>
@@ -359,8 +358,8 @@
         <category>sql</category>
       </categories>
       <tags>
-        <tag>sql</tag>
         <tag>tuning</tag>
+        <tag>sql</tag>
       </tags>
   </entry>
   <entry>
