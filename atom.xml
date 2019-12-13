@@ -73,9 +73,9 @@
       <category term="cloud native" scheme="http://www.zzzhy.cn/categories/cloud-native/"/>
     
     
-      <category term="kubernetes" scheme="http://www.zzzhy.cn/tags/kubernetes/"/>
-    
       <category term="istio" scheme="http://www.zzzhy.cn/tags/istio/"/>
+    
+      <category term="kubernetes" scheme="http://www.zzzhy.cn/tags/kubernetes/"/>
     
   </entry>
   
