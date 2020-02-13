@@ -112,10 +112,10 @@
 </tbody></table>
 ]]></content>
       <categories>
-        <category>design-pattern</category>
+        <category>cloud native</category>
       </categories>
       <tags>
-        <tag>pattern</tag>
+        <tag>cloud native</tag>
       </tags>
   </entry>
   <entry>
@@ -354,8 +354,8 @@
         <category>cloud native</category>
       </categories>
       <tags>
-        <tag>kubernetes</tag>
         <tag>istio</tag>
+        <tag>kubernetes</tag>
       </tags>
   </entry>
   <entry>
