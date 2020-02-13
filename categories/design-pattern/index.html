@@ -82,7 +82,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="spark,streaming,scala,tuning" />
+  <meta name="keywords" content="zzzhy, NexT, 曾海云, 海云, spark, akka, scala" />
 
 
 
@@ -100,15 +100,12 @@
 
 
 
-<meta name="description" content="spark-streaming的状态更新updateStateByKey、reduceByKeyAndWindow必须启用检查点功能，因为有状态的操作是从程序开始时一直进行的 DStream操作 与RDD相同的操作方法 transform：用于直接操作DStream内部的RDD，那些DStream没有提供的RDD操作，可以通过transform调用实现。如join：123val joinedDSt">
-<meta name="keywords" content="spark,streaming,scala,tuning">
-<meta property="og:type" content="article">
-<meta property="og:title" content="spark streaming 基础与调优">
-<meta property="og:url" content="http:&#x2F;&#x2F;www.zzzhy.cn&#x2F;2019&#x2F;10&#x2F;30&#x2F;spark-streaming-tuning&#x2F;index.html">
+<meta name="keywords" content="曾海云,zzzhy,cloud native,kubernetes,spark,scala,istio">
+<meta property="og:type" content="website">
+<meta property="og:title" content="running-in-sky">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.zzzhy.cn&#x2F;categories&#x2F;design-pattern&#x2F;index.html">
 <meta property="og:site_name" content="running-in-sky">
-<meta property="og:description" content="spark-streaming的状态更新updateStateByKey、reduceByKeyAndWindow必须启用检查点功能，因为有状态的操作是从程序开始时一直进行的 DStream操作 与RDD相同的操作方法 transform：用于直接操作DStream内部的RDD，那些DStream没有提供的RDD操作，可以通过transform调用实现。如join：123val joinedDSt">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-14T16:31:57.795Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -138,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://www.zzzhy.cn/2019/10/30/spark-streaming-tuning/"/>
+  <link rel="canonical" href="http://www.zzzhy.cn/categories/design-pattern/"/>
 
 
 
 
 
-  <title>spark streaming 基础与调优 | running-in-sky</title>
+  <title>分类: design-pattern | running-in-sky</title>
   
 
 
@@ -179,7 +176,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -317,274 +314,55 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block category">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>design-pattern<small>分类</small>
+        </h1>
+      </div>
 
-  
-  
-  
+      
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.zzzhy.cn/2019/10/30/spark-streaming-tuning/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zzzhy">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="running-in-sky">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
+            <a class="post-title-link" href="/2020/02/13/kubernetes-vs-openshift/" itemprop="url">
+              
+                <span itemprop="name">kubernetes vs openshift</span>
+              
+            </a>
         
-          <h1 class="post-title" itemprop="name headline">spark streaming 基础与调优</h1>
-        
+      </h2>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-30T00:27:23+08:00">
-                2019-10-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spark/" itemprop="url" rel="index">
-                    <span itemprop="name">spark</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h2 id="spark-streaming的状态更新"><a href="#spark-streaming的状态更新" class="headerlink" title="spark-streaming的状态更新"></a>spark-streaming的状态更新</h2><p>updateStateByKey、reduceByKeyAndWindow<br><strong>必须启用检查点功能，因为有状态的操作是从程序开始时一直进行的</strong></p>
-<h2 id="DStream操作"><a href="#DStream操作" class="headerlink" title="DStream操作"></a>DStream操作</h2><ul>
-<li>与RDD相同的操作方法</li>
-<li>transform：用于直接操作DStream内部的RDD，那些DStream没有提供的RDD操作，可以通过transform调用实现。如join：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">val joinedDStream = d.transform(<span class="function"><span class="params">rdd</span> =&gt;</span> &#123;</span><br><span class="line">    rdd.join(rdd2)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h3 id="窗口操作"><a href="#窗口操作" class="headerlink" title="窗口操作"></a>窗口操作</h3><ul>
-<li>窗口长度<blockquote>
-<p>窗口跨越的周期次数，每次窗口处理的数据分片数</p>
-</blockquote>
-</li>
-<li>滑动区间<blockquote>
-<p>从当前窗口到下一个窗口间隔的周期数量,每次划过的窗口数<br>如果这两个参数的值都是1，则跟不使用窗口效果一样。每个窗口的周期数据都会合并成一个RDD保存在DStream中。</p>
-</blockquote>
-</li>
-<li>窗口函数<br>用windowLength、slideInterval生成一个带窗口的DStream，也可以使用加窗口参数的方法：countByWindow、reduceByWindow、reduceByKeyAndWindow、countByValueAndWindow.</li>
-</ul>
-<h3 id="高级操作"><a href="#高级操作" class="headerlink" title="高级操作"></a>高级操作</h3><ol>
-<li><p>缓存与持久化<br>窗口函数和updateStateByKey会默认自动持久化<br>从网络接收数据的输入DStream，默认持久化级别是复制数据到两个节点上，以确保容错能力。</p>
-</li>
-<li><p>打包、发布和监控</p>
-</li>
-</ol>
-<ul>
-<li>需要提供spark之外的其他所有第三方jar包。</li>
-<li>最好用hdfs或s3的文件系统目录来配置检查点</li>
-<li>配置driver程序自动重启<blockquote>
-<p>standalone模式提交用–deploy-mode cluster –supervise,YARN下选择yarn-cluster，Mesos下通过Marathon协助实现。</p>
-</blockquote>
-</li>
-<li>从1.2开始，支持Write Ahead Logs(WAL)，开启之后，所有收到的数据在处理前会写到检查点目录下，可确保driver重启期间数据不丢失。设置spark.streaming.receiver.writeAheadLog.enable为true开启，会降低数据接收的吞吐量，不过可以通过采用<strong>并发接收</strong>的方式降低影响。如果开启了WAL，可以关闭接受数据时的复制机制：<strong>设置输入DStream的存储级别为StorageLevel.MEMORY_AND_DISK_SER</strong>。</li>
-</ul>
-<ol start="3">
-<li>更新程序代码<br>为了不丢失数据，可采用一下两种方法：</li>
-</ol>
-<ul>
-<li><strong>新旧程序同时运行。</strong> 等新的程序运行之后，在停止旧的程序。这种方式要求数据源支持同时向新、旧两个版本的程序发数据</li>
-<li><strong>先停止旧的程序再启动新的程序。</strong><br>要保证旧的程序是被优雅的关闭，确保关闭前接收到的数据都处理完了。这种方式只适用于<strong>支持缓存数据功能</strong>的数据源，如Kafka、Flume。启动新的程序时在读取前一个程序的检查点信息时可能出错，因为检查点中一些对象是序列化存储，新的对象结构可能已经改变了。解决办法是：<strong>用新的检查点目录</strong>或者<strong>删除旧的检查点目录下的所有内容</strong>。</li>
-</ul>
-<h2 id="spark-streaming调优方向"><a href="#spark-streaming调优方向" class="headerlink" title="spark streaming调优方向"></a>spark streaming调优方向</h2><ol>
-<li><p>每个批次的处理时间尽可能短</p>
-</li>
-<li><p>收到数据后尽可能快的处理</p>
-</li>
-</ol>
-<h2 id="优化方法"><a href="#优化方法" class="headerlink" title="优化方法"></a>优化方法</h2><h3 id="减少批处理的时间"><a href="#减少批处理的时间" class="headerlink" title="减少批处理的时间"></a>减少批处理的时间</h3><ol>
-<li>增加数据接收的并发数量，尤其当瓶颈发生在数据接收的时候。<blockquote>
-<p>默认每个InputDStream只会创建一个接收器，我们可以创建多个让它们接收不同的数据分区，以实现并行接收。</p>
-</blockquote>
-</li>
-</ol>
-<blockquote>
-<p>比如1个接收2个topic的Kafka InputDStream可以优化为2个InputDStream，各接收一个topic，然后在合并。</p>
-</blockquote>
-<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> numStreams = <span class="number">5</span></span><br><span class="line"><span class="keyword">val</span> kafkaStreams = (<span class="number">1</span> to numStreams).map&#123;</span><br><span class="line">    i =&gt; <span class="type">KafkaUtils</span>.createStream(...)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">val</span> unifiedStream = streamingContext.union(kafkaStreams)</span><br><span class="line">unifiedStream.print()</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><p>数据处理的并发度</p>
-<blockquote>
-<p>调整选项spark.default.parallelism</p>
-</blockquote>
-</li>
-<li><p>task启动的额外开销</p>
-<blockquote>
-<p>如果task启动过于频繁（比如每秒50次），额外的开销可能非常高，甚至无法达到实时计算要求。</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="设置合理批次间隔时间"><a href="#设置合理批次间隔时间" class="headerlink" title="设置合理批次间隔时间"></a>设置合理批次间隔时间</h3><blockquote>
-<p>一般来说短时间间隔会导致更多的额外开销，以及无法完成的风险，所以前期采取相对保守的方法，将间隔设置为5~10秒。然后通过观察运行数据确保系统足够实时，每个间隔的实际计算时间远小于间隔时间，再逐渐缩短间隔时间。</p>
-</blockquote>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-      <div>
-        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-  <div></div>
-  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>Donate</span>
-  </button>
-  <div id="QR" style="display: none;">
-
-    
-      <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/uploads/fav.png" alt="zzzhy WeChat Pay"/>
-        <p>WeChat Pay</p>
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2020-02-13T16:47:21+08:00"
+              content="2020-02-13" >
+          02-13
+        </time>
       </div>
-    
 
-    
-
-    
-
-  </div>
-</div>
-
-      </div>
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/tuning/" rel="tag"># tuning</a>
-          
-            <a href="/tags/scala/" rel="tag"># scala</a>
-          
-            <a href="/tags/spark/" rel="tag"># spark</a>
-          
-            <a href="/tags/spark-streaming/" rel="tag"># spark streaming</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/10/30/scala-log-handle/" rel="next" title="scala 日志处理实例">
-                <i class="fa fa-chevron-left"></i> scala 日志处理实例
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/10/30/spark-streaming-indoor/" rel="prev" title="spark streaming入门">
-                spark streaming入门 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
       
     </div>
+
   </div>
+  
+  
+  
+
+  
+
 
 
           </div>
@@ -592,12 +370,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div id="lv-container" data-id="city" data-uid="MTAyMC80NzQwNC8yMzkwNA=="></div>
-    
-  </div>
-
 
         </div>
         
@@ -618,17 +390,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.png"
@@ -721,22 +484,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#spark-streaming的状态更新"><span class="nav-number">1.</span> <span class="nav-text">spark-streaming的状态更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DStream操作"><span class="nav-number">2.</span> <span class="nav-text">DStream操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#窗口操作"><span class="nav-number">2.1.</span> <span class="nav-text">窗口操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级操作"><span class="nav-number">2.2.</span> <span class="nav-text">高级操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#spark-streaming调优方向"><span class="nav-number">3.</span> <span class="nav-text">spark streaming调优方向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化方法"><span class="nav-number">4.</span> <span class="nav-text">优化方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#减少批处理的时间"><span class="nav-number">4.1.</span> <span class="nav-text">减少批处理的时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置合理批次间隔时间"><span class="nav-number">4.2.</span> <span class="nav-text">设置合理批次间隔时间</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -867,10 +614,10 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
-
+  
 
   
 
@@ -899,17 +646,6 @@
 
 
 
-  
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
   
 
 

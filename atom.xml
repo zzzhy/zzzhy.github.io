@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.zzzhy.cn/"/>
-  <updated>2020-01-08T06:29:42.441Z</updated>
+  <updated>2020-02-13T09:07:35.243Z</updated>
   <id>http://www.zzzhy.cn/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>kubernetes vs openshift</title>
+    <link href="http://www.zzzhy.cn/2020/02/13/kubernetes-vs-openshift/"/>
+    <id>http://www.zzzhy.cn/2020/02/13/kubernetes-vs-openshift/</id>
+    <published>2020-02-13T08:47:21.000Z</published>
+    <updated>2020-02-13T09:07:35.243Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Openshift-Vs-Kubernetes"><a href="#Openshift-Vs-Kubernetes" class="headerlink" title="Openshift Vs Kubernetes"></a>Openshift Vs Kubernetes</h1><blockquote><p>Openshift 基于Kubernetes，提供了开箱即用的运行一个容器平台所必需的常用组件，并且提供了围绕DevOps的多种常用工具。</p></blockquote><table><thead><tr><th>功能/特性</th><th>Kubernetes</th><th>Openshift</th></tr></thead><tbody><tr><td>4层及7层路由</td><td>Ingress</td><td>Ingress &amp; Route（HAProxy，F5）</td></tr><tr><td>Project对象</td><td>无，只有抽象的Namespace</td><td>有</td></tr><tr><td>是否有开箱即用的存储</td><td>无</td><td>NFS</td></tr><tr><td>Docker Registry</td><td>无</td><td>有</td></tr><tr><td>自动构建Docker镜像</td><td>无</td><td>Source2Image，自动从源代码构建镜像</td></tr><tr><td>开箱即用的常用容器镜像</td><td>无</td><td>Tomcat，Mysql，MongoDB，NodeJS，Python等</td></tr><tr><td>Image Stream</td><td>无</td><td>有</td></tr><tr><td>构建（Build）</td><td>无</td><td>支持，通过BuildConfig对象支持应用的构建以及DockerImage的构建</td></tr><tr><td>网络</td><td>Flannel</td><td>Flannel，OVS subnet，OVS多租户，Nuage</td></tr><tr><td>OAuth集成</td><td>无</td><td>有</td></tr><tr><td>集中日志处理</td><td>无</td><td>集成了EFK的日志解决方案，且Kibana是多租户分权限的</td></tr><tr><td>集成的容器性能监控</td><td>无</td><td>集成了Hawkular Metrics的容器性能数据采集、监控和存储</td></tr><tr><td>CI、CD集成</td><td>Jenkins插件，需要自己集成</td><td>实现了3种CI/CD，1. 内置的流程 2. 内置的多租户的Jenkins，3. 外置Jenkins的集成</td></tr><tr><td>JVM Console集成</td><td>无</td><td>集成了基于Jolokia的JVM Console，可以查看各种JVM和JMX相关数据</td></tr><tr><td>Docker</td><td>无</td><td>集成了安全增强的Docker支持</td></tr><tr><td>管理员图形工具</td><td>无</td><td>提供了Cockpit和CloudForms座位管理员工具</td></tr><tr><td>计量与计费</td><td>无</td><td>提供的CloudForms可以做计量与计费</td></tr><tr><td>认证的第三方容器镜像</td><td>无</td><td>提供了认证的容器镜像如NGINX，Redis等</td></tr><tr><td></td><td></td><td></td></tr></tbody></table>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Openshift-Vs-Kubernetes&quot;&gt;&lt;a href=&quot;#Openshift-Vs-Kubernetes&quot; class=&quot;headerlink&quot; title=&quot;Openshift Vs Kubernetes&quot;&gt;&lt;/a&gt;Openshift Vs Kube
+      
+    
+    </summary>
+    
+    
+      <category term="design-pattern" scheme="http://www.zzzhy.cn/categories/design-pattern/"/>
+    
+    
+      <category term="pattern" scheme="http://www.zzzhy.cn/tags/pattern/"/>
+    
+  </entry>
   
   <entry>
     <title>kubernetes pod资源分配最佳实践</title>
@@ -100,9 +126,9 @@
       <category term="cloud native" scheme="http://www.zzzhy.cn/categories/cloud-native/"/>
     
     
-      <category term="istio" scheme="http://www.zzzhy.cn/tags/istio/"/>
-    
       <category term="kubernetes" scheme="http://www.zzzhy.cn/tags/kubernetes/"/>
+    
+      <category term="istio" scheme="http://www.zzzhy.cn/tags/istio/"/>
     
   </entry>
   
