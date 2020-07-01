@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="zzzhy, NexT, 曾海云, 海云, spark, akka, scala" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="running-in-sky" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Istio 知识图谱Istio 介绍Istio 和服务网格 概念原理   Istio   Istio 概述 架构解析   服务网格   什么是服务网格 服务网格的设计模式     Istio能带来什么   核心功能 流量管理 安全 可观察性 平台支持 集成和定制  架构 Envoy   API   MS（Metric 服务） RLS（速率限制服务）   xDS    ADS RDS EDS CDS">
+<meta name="keywords" content="曾海云,zzzhy,cloud native,kubernetes,spark,scala,istio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="istio-knowledge">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.zzzhy.cn&#x2F;2020&#x2F;06&#x2F;17&#x2F;istio-knowledge&#x2F;index.html">
+<meta property="og:site_name" content="running-in-sky">
+<meta property="og:description" content="Istio 知识图谱Istio 介绍Istio 和服务网格 概念原理   Istio   Istio 概述 架构解析   服务网格   什么是服务网格 服务网格的设计模式     Istio能带来什么   核心功能 流量管理 安全 可观察性 平台支持 集成和定制  架构 Envoy   API   MS（Metric 服务） RLS（速率限制服务）   xDS    ADS RDS EDS CDS">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-06-16T16:13:15.433Z">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.zzzhy.cn/2020/06/17/istio-knowledge/"/>
+
+
+
+
+
+  <title>istio-knowledge | running-in-sky</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?50f500b11276364be53ed9a607ec79c9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">running-in-sky</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<script data-ad-client="ca-pub-7097230958984885" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.zzzhy.cn/2020/06/17/istio-knowledge/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zzzhy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="running-in-sky">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">istio-knowledge</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-17T00:12:53+08:00">
+                2020-06-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Istio-知识图谱"><a href="#Istio-知识图谱" class="headerlink" title="Istio 知识图谱"></a><strong>Istio 知识图谱</strong></h1><h2 id="Istio-介绍"><a href="#Istio-介绍" class="headerlink" title="Istio 介绍"></a><strong>Istio 介绍</strong></h2><h3 id="Istio-和服务网格"><a href="#Istio-和服务网格" class="headerlink" title="Istio 和服务网格"></a><strong>Istio 和服务网格</strong></h3><ul>
+<li><p>概念原理</p>
+</li>
+<li><ul>
+<li><p>Istio</p>
+</li>
+<li><ul>
+<li>Istio 概述</li>
+<li>架构解析</li>
+</ul>
+</li>
+<li><p>服务网格</p>
+</li>
+<li><ul>
+<li>什么是服务网格</li>
+<li>服务网格的设计模式</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Istio能带来什么</p>
+</li>
+</ul>
+<h3 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a><strong>核心功能</strong></h3><ul>
+<li>流量管理</li>
+<li>安全</li>
+<li>可观察性</li>
+<li>平台支持</li>
+<li>集成和定制</li>
+</ul>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a><strong>架构</strong></h3><ul>
+<li><p>Envoy</p>
+</li>
+<li><ul>
+<li><p>API</p>
+</li>
+<li><ul>
+<li>MS（Metric 服务）</li>
+<li>RLS（速率限制服务）</li>
+</ul>
+</li>
+<li><p>xDS </p>
+</li>
+<li><ul>
+<li>ADS</li>
+<li>RDS</li>
+<li>EDS</li>
+<li>CDS</li>
+<li>LDS</li>
+<li>SDS</li>
+<li>HDS</li>
+</ul>
+</li>
+<li><p>扩展 Envoy</p>
+</li>
+</ul>
+</li>
+<li><p>Mixer</p>
+</li>
+<li><ul>
+<li>Policy</li>
+<li>Telemetry</li>
+</ul>
+</li>
+<li><p>Pilot</p>
+</li>
+<li><p>Citadel</p>
+</li>
+<li><p>Galley</p>
+</li>
+<li><p>Egress gateway</p>
+</li>
+<li><p>Ingress gateway</p>
+</li>
+<li><p>Sidecar injector</p>
+</li>
+<li><ul>
+<li><p>Mutable webhook</p>
+</li>
+<li><p>Sidecar 注入流程</p>
+</li>
+<li><p>透明拦截</p>
+</li>
+<li><ul>
+<li>iptables</li>
+<li>eBPF</li>
+</ul>
+</li>
+<li><p>Go template</p>
+</li>
+<li><p>Sidecar 的 ConfigMap 配置</p>
+</li>
+<li><ul>
+<li>istio</li>
+<li>istio-sidecar-injector</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="设计目标"><a href="#设计目标" class="headerlink" title="设计目标"></a><strong>设计目标</strong></h3><h3 id="Istio-与同类产品对比"><a href="#Istio-与同类产品对比" class="headerlink" title="Istio 与同类产品对比"></a><strong>Istio 与同类产品对比</strong></h3><ul>
+<li>Istio vs Spring Cloud</li>
+<li>Istio vs Linkerd2</li>
+</ul>
+<h2 id="策略与遥测"><a href="#策略与遥测" class="headerlink" title="策略与遥测"></a><strong>策略与遥测</strong></h2><h3 id="Mixer"><a href="#Mixer" class="headerlink" title="Mixer"></a><strong>Mixer</strong></h3><ul>
+<li><p>前置检查</p>
+</li>
+<li><p>配额管理</p>
+</li>
+<li><p>遥测报告</p>
+</li>
+</ul>
+<h3 id="适配器"><a href="#适配器" class="headerlink" title="适配器"></a><strong>适配器</strong></h3><h3 id="可靠性和延迟"><a href="#可靠性和延迟" class="headerlink" title="可靠性和延迟"></a><strong>可靠性和延迟</strong></h3><h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a><strong>属性</strong></h3><ul>
+<li>属性词汇</li>
+<li>属性表达式</li>
+</ul>
+<h3 id="缓存机制（Mixer-Cache）"><a href="#缓存机制（Mixer-Cache）" class="headerlink" title="缓存机制（Mixer Cache）"></a><strong>缓存机制（Mixer Cache）</strong></h3><h3 id="配置模型"><a href="#配置模型" class="headerlink" title="配置模型"></a><strong>配置模型</strong></h3><h3 id="处理器（Handler）"><a href="#处理器（Handler）" class="headerlink" title="处理器（Handler）"></a><strong>处理器（Handler）</strong></h3><h3 id="实例（Instance）"><a href="#实例（Instance）" class="headerlink" title="实例（Instance）"></a><strong>实例（Instance）</strong></h3><h3 id="规则（Rule）"><a href="#规则（Rule）" class="headerlink" title="规则（Rule）"></a><strong>规则（Rule）</strong></h3><p><strong>实战</strong></p>
+<ul>
+<li>使用Denier 适配器实现白黑名单</li>
+<li>启用速率限制</li>
+</ul>
+<h2 id="安全"><a href="#安全" class="headerlink" title="安全"></a><strong>安全</strong></h2><h3 id="高级架构"><a href="#高级架构" class="headerlink" title="高级架构"></a><strong>高级架构</strong></h3><h3 id="Istio-身份"><a href="#Istio-身份" class="headerlink" title="Istio 身份"></a><strong>Istio 身份</strong></h3><ul>
+<li>Istio 安全与 SPIFFE</li>
+</ul>
+<h3 id="PKI"><a href="#PKI" class="headerlink" title="PKI"></a><strong>PKI</strong></h3><ul>
+<li>Kubernetes 方案</li>
+<li>本地机器方案</li>
+<li>代理程序代理节点（开发中）</li>
+</ul>
+<h3 id="认证"><a href="#认证" class="headerlink" title="认证"></a><strong>认证</strong></h3><ul>
+<li><p>双向 TLS 认证</p>
+</li>
+<li><ul>
+<li>什么是 TLS？</li>
+<li>安全命名</li>
+</ul>
+</li>
+<li><p>认证架构</p>
+</li>
+<li><p>认证策略</p>
+</li>
+<li><ul>
+<li>策略存储范围</li>
+<li>目标选择器</li>
+<li>传输认证</li>
+<li>来源身份认证</li>
+<li>主认证绑定</li>
+</ul>
+</li>
+<li><p>更新认证策略</p>
+</li>
+</ul>
+<h3 id="授权和鉴权"><a href="#授权和鉴权" class="headerlink" title="授权和鉴权"></a><strong>授权和鉴权</strong></h3><ul>
+<li><p>授权架构</p>
+</li>
+<li><p>授权许可模式</p>
+</li>
+<li><p>启用授权</p>
+</li>
+<li><p>授权策略</p>
+</li>
+<li><ul>
+<li>ServiceRole</li>
+<li>ServiceRoleBinding</li>
+</ul>
+</li>
+<li><p>使用其他授权机制</p>
+</li>
+</ul>
+<h2 id="多集群部署"><a href="#多集群部署" class="headerlink" title="多集群部署"></a><strong>多集群部署</strong></h2><h3 id="多集群服务网格"><a href="#多集群服务网格" class="headerlink" title="多集群服务网格"></a><strong>多集群服务网格</strong></h3><ul>
+<li>Istio-remote</li>
+<li>多控制平面拓扑</li>
+<li>单一控制平面拓扑</li>
+</ul>
+<h2 id="性能与可伸缩性"><a href="#性能与可伸缩性" class="headerlink" title="性能与可伸缩性"></a><strong>性能与可伸缩性</strong></h2><h3 id="微基准测试"><a href="#微基准测试" class="headerlink" title="微基准测试"></a><strong>微基准测试</strong></h3><ul>
+<li>什么是基准测试？</li>
+</ul>
+<h3 id="测试场景"><a href="#测试场景" class="headerlink" title="测试场景"></a><strong>测试场景</strong></h3><h3 id="端到端综合基准测试"><a href="#端到端综合基准测试" class="headerlink" title="端到端综合基准测试"></a><strong>端到端综合基准测试</strong></h3><h3 id="现实应用程序基准测试"><a href="#现实应用程序基准测试" class="headerlink" title="现实应用程序基准测试"></a><strong>现实应用程序基准测试</strong></h3><h3 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a><strong>自动化测试</strong></h3><h3 id="可伸缩性和规模调整指南"><a href="#可伸缩性和规模调整指南" class="headerlink" title="可伸缩性和规模调整指南"></a><strong>可伸缩性和规模调整指南</strong></h3><h2 id="日志监控和跟踪"><a href="#日志监控和跟踪" class="headerlink" title="日志监控和跟踪"></a><strong>日志监控和跟踪</strong></h2><h3 id="Envoy-和-Mixer"><a href="#Envoy-和-Mixer" class="headerlink" title="Envoy 和 Mixer"></a><strong>Envoy 和 Mixer</strong></h3><h3 id="分布式跟踪"><a href="#分布式跟踪" class="headerlink" title="分布式跟踪"></a><strong>分布式跟踪</strong></h3><ul>
+<li><p>OpenTracing</p>
+</li>
+<li><p>Jaeger</p>
+</li>
+<li><p>Zipkin</p>
+</li>
+<li><p>Kiali</p>
+</li>
+</ul>
+<h3 id="监控"><a href="#监控" class="headerlink" title="监控"></a><strong>监控</strong></h3><ul>
+<li>Prometheus</li>
+<li>配置 Metrics 收集</li>
+<li>获取 TCP 服务指标</li>
+<li>Grafana  可视化图表展示</li>
+<li>生成服务图</li>
+</ul>
+<h3 id="日志收集"><a href="#日志收集" class="headerlink" title="日志收集"></a><strong>日志收集</strong></h3><ul>
+<li>Fluentd</li>
+<li>配置日志</li>
+<li>安装 Fluentd/Elasticsearch/Kibana 套件</li>
+</ul>
+<h2 id="流量管理"><a href="#流量管理" class="headerlink" title="流量管理"></a><strong>流量管理</strong></h2><h3 id="Pilot-和-Envoy"><a href="#Pilot-和-Envoy" class="headerlink" title="Pilot 和 Envoy"></a><strong>Pilot 和 Envoy</strong></h3><h3 id="请求路由"><a href="#请求路由" class="headerlink" title="请求路由"></a><strong>请求路由</strong></h3><ul>
+<li>服务之间的通讯</li>
+<li>Ingress 和 Egress</li>
+</ul>
+<h3 id="服务发现和负载均衡"><a href="#服务发现和负载均衡" class="headerlink" title="服务发现和负载均衡"></a><strong>服务发现和负载均衡</strong></h3><h3 id="故障处理"><a href="#故障处理" class="headerlink" title="故障处理"></a><strong>故障处理</strong></h3><ul>
+<li>微调</li>
+<li>FAQ</li>
+</ul>
+<h3 id="故障注入"><a href="#故障注入" class="headerlink" title="故障注入"></a><strong>故障注入</strong></h3><ul>
+<li><p>延时</p>
+</li>
+<li><p>错误</p>
+</li>
+</ul>
+<h3 id="流量转移"><a href="#流量转移" class="headerlink" title="流量转移"></a><strong>流量转移</strong></h3><h3 id="熔断"><a href="#熔断" class="headerlink" title="熔断"></a><strong>熔断</strong></h3><h3 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a><strong>镜像</strong></h3><h3 id="规则配置"><a href="#规则配置" class="headerlink" title="规则配置"></a><strong>规则配置</strong></h3><ul>
+<li>设置请求超时</li>
+<li>A/B 测试</li>
+<li>灰度发布（金丝雀发布）</li>
+<li>蓝绿发布</li>
+</ul>
+<h3 id="Virtual-Service"><a href="#Virtual-Service" class="headerlink" title="Virtual Service"></a><strong>Virtual Service</strong></h3><ul>
+<li>定义</li>
+<li>规则的目标描述</li>
+<li>HTTP 路由</li>
+<li>TCP 路由</li>
+<li>TLS 路由</li>
+<li>在服务之间分拆流量</li>
+<li>超时和重试</li>
+<li>错误注入</li>
+<li>跳转和重写</li>
+<li>跨域资源共享</li>
+<li>镜像流量</li>
+<li>添加请求头</li>
+<li>条件规则</li>
+<li>多重匹配条件</li>
+<li>优先级</li>
+</ul>
+<h3 id="DestinationRule"><a href="#DestinationRule" class="headerlink" title="DestinationRule"></a><strong>DestinationRule</strong></h3><ul>
+<li>定义</li>
+<li>负载均衡</li>
+<li>连接池</li>
+<li>健康检查</li>
+<li>断路器</li>
+<li>TLS</li>
+<li>规则评估</li>
+</ul>
+<h3 id="ServiceEntry"><a href="#ServiceEntry" class="headerlink" title="ServiceEntry"></a><strong>ServiceEntry</strong></h3><ul>
+<li>定义</li>
+</ul>
+<h3 id="Gateway"><a href="#Gateway" class="headerlink" title="Gateway"></a><strong>Gateway</strong></h3><ul>
+<li>定义</li>
+<li>Gateway vs kubernetes ingress</li>
+<li>Gateway 原理及实现</li>
+</ul>
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a><strong>最佳实践</strong></h2><h3 id="部署"><a href="#部署" class="headerlink" title="部署"></a><strong>部署</strong></h3><ul>
+<li>Istio Dashboard</li>
+<li>升级 Istio</li>
+<li>Helm 定制部署 Istio</li>
+</ul>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a><strong>示例</strong></h3><ul>
+<li>一个请求的完整过程分析</li>
+</ul>
+<h3 id="升级维护"><a href="#升级维护" class="headerlink" title="升级维护"></a><strong>升级维护</strong></h3><ul>
+<li>升级操作步骤</li>
+<li>升级注意事项</li>
+<li>无缝升级</li>
+</ul>
+<h3 id="故障排查"><a href="#故障排查" class="headerlink" title="故障排查"></a><strong>故障排查</strong></h3><ul>
+<li><p>故障排查指南</p>
+</li>
+<li><p>常见故障</p>
+</li>
+<li><ul>
+<li>no healthy upstream </li>
+<li>upstream connect error or disconnect/reset before headers</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div></div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/fav.png" alt="zzzhy WeChat Pay"/>
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/13/kubernetes-vs-openshift/" rel="next" title="kubernetes vs openshift">
+                <i class="fa fa-chevron-left"></i> kubernetes vs openshift
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NzQwNC8yMzkwNA=="></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="zzzhy" />
+          <p class="site-author-name" itemprop="name">zzzhy</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zzzhy" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto://candle_1667@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      Email
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Istio-知识图谱"><span class="nav-number">1.</span> <span class="nav-text">Istio 知识图谱</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Istio-介绍"><span class="nav-number">1.1.</span> <span class="nav-text">Istio 介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Istio-和服务网格"><span class="nav-number">1.1.1.</span> <span class="nav-text">Istio 和服务网格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#核心功能"><span class="nav-number">1.1.2.</span> <span class="nav-text">核心功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构"><span class="nav-number">1.1.3.</span> <span class="nav-text">架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计目标"><span class="nav-number">1.1.4.</span> <span class="nav-text">设计目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Istio-与同类产品对比"><span class="nav-number">1.1.5.</span> <span class="nav-text">Istio 与同类产品对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#策略与遥测"><span class="nav-number">1.2.</span> <span class="nav-text">策略与遥测</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mixer"><span class="nav-number">1.2.1.</span> <span class="nav-text">Mixer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#适配器"><span class="nav-number">1.2.2.</span> <span class="nav-text">适配器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可靠性和延迟"><span class="nav-number">1.2.3.</span> <span class="nav-text">可靠性和延迟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性"><span class="nav-number">1.2.4.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存机制（Mixer-Cache）"><span class="nav-number">1.2.5.</span> <span class="nav-text">缓存机制（Mixer Cache）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置模型"><span class="nav-number">1.2.6.</span> <span class="nav-text">配置模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理器（Handler）"><span class="nav-number">1.2.7.</span> <span class="nav-text">处理器（Handler）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例（Instance）"><span class="nav-number">1.2.8.</span> <span class="nav-text">实例（Instance）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#规则（Rule）"><span class="nav-number">1.2.9.</span> <span class="nav-text">规则（Rule）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全"><span class="nav-number">1.3.</span> <span class="nav-text">安全</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#高级架构"><span class="nav-number">1.3.1.</span> <span class="nav-text">高级架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Istio-身份"><span class="nav-number">1.3.2.</span> <span class="nav-text">Istio 身份</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PKI"><span class="nav-number">1.3.3.</span> <span class="nav-text">PKI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#认证"><span class="nav-number">1.3.4.</span> <span class="nav-text">认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#授权和鉴权"><span class="nav-number">1.3.5.</span> <span class="nav-text">授权和鉴权</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多集群部署"><span class="nav-number">1.4.</span> <span class="nav-text">多集群部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多集群服务网格"><span class="nav-number">1.4.1.</span> <span class="nav-text">多集群服务网格</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能与可伸缩性"><span class="nav-number">1.5.</span> <span class="nav-text">性能与可伸缩性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#微基准测试"><span class="nav-number">1.5.1.</span> <span class="nav-text">微基准测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试场景"><span class="nav-number">1.5.2.</span> <span class="nav-text">测试场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#端到端综合基准测试"><span class="nav-number">1.5.3.</span> <span class="nav-text">端到端综合基准测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#现实应用程序基准测试"><span class="nav-number">1.5.4.</span> <span class="nav-text">现实应用程序基准测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动化测试"><span class="nav-number">1.5.5.</span> <span class="nav-text">自动化测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可伸缩性和规模调整指南"><span class="nav-number">1.5.6.</span> <span class="nav-text">可伸缩性和规模调整指南</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日志监控和跟踪"><span class="nav-number">1.6.</span> <span class="nav-text">日志监控和跟踪</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Envoy-和-Mixer"><span class="nav-number">1.6.1.</span> <span class="nav-text">Envoy 和 Mixer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式跟踪"><span class="nav-number">1.6.2.</span> <span class="nav-text">分布式跟踪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监控"><span class="nav-number">1.6.3.</span> <span class="nav-text">监控</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日志收集"><span class="nav-number">1.6.4.</span> <span class="nav-text">日志收集</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流量管理"><span class="nav-number">1.7.</span> <span class="nav-text">流量管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pilot-和-Envoy"><span class="nav-number">1.7.1.</span> <span class="nav-text">Pilot 和 Envoy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#请求路由"><span class="nav-number">1.7.2.</span> <span class="nav-text">请求路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务发现和负载均衡"><span class="nav-number">1.7.3.</span> <span class="nav-text">服务发现和负载均衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#故障处理"><span class="nav-number">1.7.4.</span> <span class="nav-text">故障处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#故障注入"><span class="nav-number">1.7.5.</span> <span class="nav-text">故障注入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流量转移"><span class="nav-number">1.7.6.</span> <span class="nav-text">流量转移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#熔断"><span class="nav-number">1.7.7.</span> <span class="nav-text">熔断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#镜像"><span class="nav-number">1.7.8.</span> <span class="nav-text">镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#规则配置"><span class="nav-number">1.7.9.</span> <span class="nav-text">规则配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Virtual-Service"><span class="nav-number">1.7.10.</span> <span class="nav-text">Virtual Service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DestinationRule"><span class="nav-number">1.7.11.</span> <span class="nav-text">DestinationRule</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ServiceEntry"><span class="nav-number">1.7.12.</span> <span class="nav-text">ServiceEntry</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gateway"><span class="nav-number">1.7.13.</span> <span class="nav-text">Gateway</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最佳实践"><span class="nav-number">1.8.</span> <span class="nav-text">最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#部署"><span class="nav-number">1.8.1.</span> <span class="nav-text">部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#示例"><span class="nav-number">1.8.2.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#升级维护"><span class="nav-number">1.8.3.</span> <span class="nav-text">升级维护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#故障排查"><span class="nav-number">1.8.4.</span> <span class="nav-text">故障排查</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  1989 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zzzhy</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="noopener">
+    NexT.Pisces
+  </a>
+</div>
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1278213695'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1278213695%26show%3Dpic2' type='text/javascript'%3E%3C/script%3E"));</script>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+  
+  <script type="text/javascript" src="https://cdn.bootcss.com/three.js/r83/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
